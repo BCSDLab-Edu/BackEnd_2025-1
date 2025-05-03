@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Iterator;
 
 @RestController
 @RequestMapping("/articles")
@@ -39,6 +40,20 @@ public class ArticleController {
                 article.setTitle(updatedArticle.getTitle());
                 article.setContent(updatedArticle.getContent());
                 return ResponseEntity.ok(article);
+            }
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    // DELETE /articles/{id}
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteArticle(@PathVariable int id) {
+        Iterator<Article> iterator = articleList.iterator();
+        while (iterator.hasNext()) {
+            Article article = iterator.next();
+            if (article.getId() == id) {
+                iterator.remove();
+                return ResponseEntity.noContent().build();
             }
         }
         return ResponseEntity.notFound().build();
