@@ -22,4 +22,12 @@ public class ArticleController {
         }
         return ResponseEntity.notFound().build();
     }
+
+    // POST /articles
+    @PostMapping
+    public ResponseEntity<Article> createArticle(@RequestBody Article article) {
+        article.setId(currentId++);
+        articleList.add(article);
+        return ResponseEntity.ok(article);
+    }
 }
