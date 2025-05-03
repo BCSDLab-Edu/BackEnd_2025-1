@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class HelloController {
 
+    Introduce jisu = new Introduce("임지수", 23);
     @ResponseBody
     @GetMapping("/hello")
     public String hello() {
@@ -38,5 +39,11 @@ public class HelloController {
                 </html>
                 """;
         }
+    }
+
+    @ResponseBody
+    @GetMapping("/json")
+    public Introduce json() {
+        return jisu;
     }
 }
