@@ -30,4 +30,17 @@ public class ArticleController {
         articleList.add(article);
         return ResponseEntity.ok(article);
     }
+
+    // PUT /articles/{id}
+    @PutMapping("/{id}")
+    public ResponseEntity<Article> updateArticle(@PathVariable int id, @RequestBody Article updatedArticle) {
+        for (Article article : articleList) {
+            if (article.getId() == id) {
+                article.setTitle(updatedArticle.getTitle());
+                article.setContent(updatedArticle.getContent());
+                return ResponseEntity.ok(article);
+            }
+        }
+        return ResponseEntity.notFound().build();
+    }
 }
