@@ -29,4 +29,8 @@ public class ArticleService {
     public Article getArticle(Long id) {
         return articleRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Article not found"));
     }
+
+    public void deleteArticle(Long id) {
+        articleRepository.delete(id);
+    }
 }

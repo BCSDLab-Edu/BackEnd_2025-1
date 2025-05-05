@@ -30,4 +30,8 @@ public class ArticleRepository {
     public List<Article> findAll() {
         return new ArrayList<>(articleDB.values());
     }
+
+    public void delete(Long id) {
+        articleDB.remove(id);
+    }
 }
