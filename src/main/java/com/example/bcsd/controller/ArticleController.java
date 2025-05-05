@@ -1,6 +1,6 @@
-package com.example.bcsd;
+package com.example.bcsd.controller;
 
-import com.example.bcsd.Article;
+import com.example.bcsd.dto.Article;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
