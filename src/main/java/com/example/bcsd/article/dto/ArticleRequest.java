@@ -2,7 +2,7 @@ package com.example.bcsd.article.dto;
 
 import com.example.bcsd.article.model.Article;
 
-public record CreateArticleRequest(
+public record ArticleRequest(
     String name,
     String description
 ) {

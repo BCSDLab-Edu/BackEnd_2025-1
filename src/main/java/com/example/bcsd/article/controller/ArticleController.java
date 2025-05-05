@@ -8,14 +8,16 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.bcsd.article.model.Article;
-import com.example.bcsd.article.dto.CreateArticleRequest;
+import com.example.bcsd.article.dto.ArticleRequest;
 import com.example.bcsd.article.dto.GetArticleResponse;
 import com.example.bcsd.article.dto.GetArticlesResponse;
+import com.example.bcsd.article.dto.UpdateArticleResponse;
 import com.example.bcsd.article.service.ArticleService;
 
 @RestController
@@ -29,7 +31,7 @@ public class ArticleController {
 
     @PostMapping
     public ResponseEntity<Void> CreateArticle(
-        @RequestBody CreateArticleRequest request
+        @RequestBody ArticleRequest request
     ) {
         articleService.CreateArticle(request);
         return ResponseEntity.status(HttpStatus.CREATED).build();
@@ -53,6 +55,15 @@ public class ArticleController {
         res.setName(article.getName());
         res.setDescription(article.getDescription());
         return ResponseEntity.ok().body(res);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<UpdateArticleResponse> UpdateArticle(
+        @PathVariable("id") Long id,
+        @RequestBody ArticleRequest request
+    ) {
+        UpdateArticleResponse res = articleService.updateArticle(id, request);
+        return ResponseEntity.ok(res);
     }
 
     @DeleteMapping("/{id}")

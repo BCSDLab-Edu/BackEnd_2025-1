@@ -31,6 +31,11 @@ public class ArticleRepository {
         return new ArrayList<>(articleDB.values());
     }
 
+    public Article updateSave(Article article) {
+        articleDB.put(article.getId(), article);
+        return article;
+    }
+
     public void delete(Long id) {
         articleDB.remove(id);
     }
