@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
+
 @Controller
 public class HelloController {
 
@@ -37,6 +38,8 @@ public class HelloController {
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(p);
     }
+
+
 
     @GetMapping("/hello2")
     public String hello2() {
