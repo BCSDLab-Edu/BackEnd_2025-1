@@ -45,4 +45,13 @@ public class PostController {
         post.setModification_date(LocalDate.now());
         return ResponseEntity.ok(post);
     }
+
+    @DeleteMapping("/{post_num}")
+    public ResponseEntity<Post> deleteArticle(@PathVariable Integer post_num) {
+        if (!map.containsKey(post_num)) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        map.remove(post_num);
+        return ResponseEntity.noContent().build();
+    }
 }
