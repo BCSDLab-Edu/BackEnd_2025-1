@@ -1,6 +1,9 @@
 package com.example.bcsd.article.repository;
 
+import java.util.List;
+import java.util.ArrayList;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -18,5 +21,13 @@ public class ArticleRepository {
         article.setId(id);
         articleDB.put(id, article);
         return article;
+    }
+
+    public Optional<Article> findById(Long id) {
+        return Optional.ofNullable(articleDB.get(id));
+    }
+
+    public List<Article> findAll() {
+        return new ArrayList<>(articleDB.values());
     }
 }

@@ -1,7 +1,12 @@
 package com.example.bcsd.article.service;
 
-import org.springframework.stereotype.Service;
+import java.util.List;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
+
+import com.example.bcsd.article.model.Article;
 import com.example.bcsd.article.dto.CreateArticleRequest;
 import com.example.bcsd.article.repository.ArticleRepository;
 
@@ -15,5 +20,13 @@ public class ArticleService {
 
     public void CreateArticle(CreateArticleRequest request) {
         articleRepository.save(request.toArticle());
+    }
+
+    public List<Article> getArticles() {
+        return articleRepository.findAll();
+    }
+
+    public Article getArticle(Long id) {
+        return articleRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Article not found"));
     }
 }
