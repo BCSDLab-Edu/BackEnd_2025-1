@@ -28,4 +28,14 @@ public class HelloController {
             return "안녕하세요 제 이름은 " + name + "입니다!";
         }
     }
+
+    @ResponseBody
+    @GetMapping("/json")
+    public Json json() {
+        Json json = new Json();
+        json.setAge("22");
+        json.setName("이예진");
+
+        return json;
+    }
 }
