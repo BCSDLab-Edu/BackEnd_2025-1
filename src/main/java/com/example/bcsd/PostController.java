@@ -33,4 +33,16 @@ public class PostController {
         map.put(post_numCounter, post);
         return ResponseEntity.status(HttpStatus.CREATED).body(post);
     }
+
+    @PatchMapping("/{post_num}")
+    public ResponseEntity<Post> updateArticle(@PathVariable Integer post_num) {
+        Post post = map.get(post_num);
+        if (post == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        post.setTitle("안녕하세요!!");
+        post.setText("재방문이에요!");
+        post.setModification_date(LocalDate.now());
+        return ResponseEntity.ok(post);
+    }
 }
