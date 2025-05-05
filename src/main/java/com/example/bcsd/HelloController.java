@@ -31,7 +31,7 @@ public class HelloController {
     @GetMapping("/json")
     @ResponseBody
     public PersonInfo json() {
-        PersonInfo info = new PersonInfo("허준기",26);
+        PersonInfo info = new PersonInfo("정준영",24);
         return info;
     }
 }
