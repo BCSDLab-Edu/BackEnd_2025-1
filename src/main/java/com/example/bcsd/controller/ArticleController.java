@@ -40,6 +40,7 @@ public class ArticleController {
         return ResponseEntity.ok("게시글 수정 완료");
     }
 
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteArticle(@PathVariable int id) {
         if (!articleMap.containsKey(id)) {
             return ResponseEntity.notFound().build();
