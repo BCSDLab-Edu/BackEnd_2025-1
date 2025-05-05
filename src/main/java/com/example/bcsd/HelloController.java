@@ -27,6 +27,8 @@ public class HelloController {
         return "안녕하세요 제 이름은 " + name + "입니다!";
     }
 
+
+    @ResponseBody
     @GetMapping(value = "/json", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Characteristic> json() {
         Characteristic p = new Characteristic(26, "허준기");
