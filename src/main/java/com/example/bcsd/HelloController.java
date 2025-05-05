@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+
 @Controller
 public class HelloController {
 
@@ -25,5 +26,12 @@ public class HelloController {
     {
         model.addAttribute("name", name);
         return "introduce";
+    }
+
+    @GetMapping("/json")
+    @ResponseBody
+    public PersonInfo json() {
+        PersonInfo info = new PersonInfo("허준기",26);
+        return info;
     }
 }
