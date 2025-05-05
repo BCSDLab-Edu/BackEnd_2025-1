@@ -1,5 +1,6 @@
 package com.example.bcsd;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -9,11 +10,19 @@ public class HelloController {
 
 
     @GetMapping("/introduce")
-    public String introduce(@RequestParam(required = false) String name) {
-        if (name == null||name.isEmpty()) {
-            return "MyName";
+    @ResponseBody
+    public String introduceJustName(@RequestParam(required = false) String name) {
+        if (name != null && !name.isEmpty()) {
+            return "안녕하세요 제 이름은 " + name + "입니다!";
+        } else {
+            return null;
         }
-        return "안녕하세요 제 이름은 "+name+"입니다!";
+
+    }
+
+    @GetMapping(value = "/introduce", params = "!name")
+    public String introducePage(){
+        return "MyName";
     }
 
     @GetMapping("/json")
