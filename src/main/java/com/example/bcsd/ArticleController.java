@@ -2,13 +2,11 @@ package com.example.bcsd;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 @RestController
 public class ArticleController {
-
     private final Map<Long, Article> articleRepo = new ConcurrentHashMap<>();
 
     // READ
@@ -21,14 +19,12 @@ public class ArticleController {
         return ResponseEntity.ok(article);
     }
 
-
     // CREATE
     @PostMapping("/article")
     public ResponseEntity<Article> create(@RequestBody Article article) {
         articleRepo.put(article.getId(), article);
         return ResponseEntity.ok(article);
     }
-
 
     // UPDATE
     @PutMapping("/article/{id}")
