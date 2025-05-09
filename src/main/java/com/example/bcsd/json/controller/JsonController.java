@@ -7,6 +7,7 @@ import com.example.bcsd.json.dto.JsonResponse;
 
 @RestController
 public class JsonController {
+    
     @GetMapping("json")
     public JsonResponse Json() {
         return new JsonResponse("허준기", 26);

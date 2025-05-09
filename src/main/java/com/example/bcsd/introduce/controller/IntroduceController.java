@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class IntroduceController {
 
-    @GetMapping("introduce")
+    @GetMapping("/introduce")
     public Object Introduce(
-        @RequestParam(value = "name", required = false) String name
+            @RequestParam(value = "name", required = false) String name
     ) {
         if (name == null || name.isBlank()) {
             return "introduce";

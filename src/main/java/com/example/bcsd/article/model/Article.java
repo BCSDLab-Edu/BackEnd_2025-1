@@ -1,9 +1,15 @@
 package com.example.bcsd.article.model;
 
+import java.time.LocalDateTime;
+
 public class Article {
     private Long id;
-    private String name;
-    private String description;
+    private Long authorId;
+    private Long boardId;
+    private String title;
+    private String content;
+    private LocalDateTime createdDate;
+    private LocalDateTime editedDate;
 
     public void setId(Long id) {
         this.id = id;
@@ -13,19 +19,51 @@ public class Article {
         return this.id;
     }
 
-    public String getName() {
-        return this.name;
+    public Long getAuthorId() {
+        return this.authorId;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setAuthorId(Long authorId) {
+        this.authorId = authorId;
     }
 
-    public String getDescription() {
-        return this.description;
+    public Long getBoardId() {
+        return this.boardId;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setBoardId(Long boardId) {
+        this.boardId = boardId;
+    }
+
+    public String getTitle() {
+        return this.title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getContent() {
+        return this.content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public LocalDateTime getCreatedDate() {
+        return this.createdDate;
+    }
+
+    public void setCreatedDate(LocalDateTime createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public LocalDateTime getEditedDate() {
+        return this.editedDate;
+    }
+
+    public void setEditedDate(LocalDateTime editedDate) {
+        this.editedDate = editedDate;
     }
 }

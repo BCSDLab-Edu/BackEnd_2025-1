@@ -1,13 +1,15 @@
 package com.example.bcsd.article.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
+import com.example.bcsd.article.dto.UpdateArticleRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.example.bcsd.article.model.Article;
-import com.example.bcsd.article.dto.ArticleRequest;
+import com.example.bcsd.article.dto.CreateArticleRequest;
 import com.example.bcsd.article.dto.UpdateArticleResponse;
 import com.example.bcsd.article.repository.ArticleRepository;
 
@@ -19,7 +21,7 @@ public class ArticleService {
         this.articleRepository = articleRepository;
     }
 
-    public void CreateArticle(ArticleRequest request) {
+    public void CreateArticle(CreateArticleRequest request) {
         articleRepository.save(request.toArticle());
     }
 
@@ -31,18 +33,28 @@ public class ArticleService {
         return articleRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Article not found"));
     }
 
-    public UpdateArticleResponse updateArticle(Long id, ArticleRequest request) {
+    public UpdateArticleResponse updateArticle(Long id, UpdateArticleRequest request) {
         Article article = getArticle(id);
-        String name = request.name();
-        String description = request.description();
-        if (name == null) {
-            name = article.getName();
-        } else if (description == null) {
-            description = article.getDescription();
+        String title = request.title();
+        Long boardId = request.boardId();
+        String content = request.content();
+
+        if (title == null) {
+            title = article.getTitle();
         }
 
-        article.setName(name);
-        article.setDescription(description);
+        if (boardId == null) {
+            boardId = article.getBoardId();
+        }
+
+        if (content == null) {
+            content = article.getContent();
+        }
+
+        article.setTitle(title);
+        article.setBoardId(boardId);
+        article.setContent(content);
+        article.setEditedDate(LocalDateTime.now());
 
         articleRepository.updateSave(article);
         return UpdateArticleResponse.from(article);

@@ -1,22 +1,18 @@
 package com.example.bcsd.article.dto;
 
-public class GetArticleResponse {
-    private String name;
-    private String description;
+import com.example.bcsd.article.model.Article;
 
-    public String getName() {
-        return this.name;
-    }
+import java.time.LocalDateTime;
 
-    public void setName(String name) {
-        this.name = name;
-    }
+public record GetArticleResponse(String title, String author, String date, String content) {
+    public static GetArticleResponse from(Article article) {
+        LocalDateTime date;
+        if (article.getEditedDate() == null) {
+            date = article.getCreatedDate();
+        } else {
+            date = article.getEditedDate();
+        }
 
-    public String getDescription() {
-        return this.description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
+        return new GetArticleResponse(article.getTitle(), article.getAuthorId().toString(), date.toString(), article.getContent());
     }
 }
