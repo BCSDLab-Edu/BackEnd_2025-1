@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Posts</title>
+</head>
+<body>
+    <h1 th:text="${board.getTitle()}"></h1>
+
+    <div th:each="article : ${articles}">
+        <h2 th:text="${article.getTitle()}"></h2>
+        <p>
+            작성자: <span th:text="${article.getAuthor()}"></span> |
+            작성일: <span th:text="${article.getDate().format('yyyy-MM-dd HH:mm')}"></span>
+        </p>
+        <div th:text="${article.getContent()}"></div>
+    </div>
+</body>
+</html>
