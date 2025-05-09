@@ -1,4 +1,4 @@
-package com.example.bcsd.article.model;
+package com.example.bcsd.board.model;
 
 public class Board {
     private Long id;
