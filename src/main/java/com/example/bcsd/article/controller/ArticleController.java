@@ -1,7 +1,5 @@
 package com.example.bcsd.article.controller;
 
-import java.util.List;
-
 import com.example.bcsd.article.dto.*;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -15,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.bcsd.article.model.Article;
 import com.example.bcsd.article.service.ArticleService;
 
 @RestController
@@ -37,19 +34,14 @@ public class ArticleController {
 
     @GetMapping
     public ResponseEntity<GetArticlesResponse> GetArticles() {
-        List<Article> articles = articleService.getArticles();
-        GetArticlesResponse res = GetArticlesResponse.from(articles);
-        return ResponseEntity.ok().body(res);
+        return ResponseEntity.ok().body(articleService.GetArticles());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<GetArticleResponse> GetArticle(
             @PathVariable("id") Long id
     ) {
-        Article article = articleService.getArticle(id);
-
-        GetArticleResponse res = GetArticleResponse.from(article);
-        return ResponseEntity.ok().body(res);
+        return ResponseEntity.ok().body(articleService.GetArticle(id));
     }
 
     @PutMapping("/{id}")
@@ -65,7 +57,7 @@ public class ArticleController {
     public ResponseEntity<Void> DeleteArticle(
             @PathVariable("id") Long id
     ) {
-        articleService.deleteArticle(id);
+        articleService.DeleteArticle(id);
         return ResponseEntity.noContent().build();
     }
 }

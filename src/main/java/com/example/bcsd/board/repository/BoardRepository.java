@@ -1,6 +1,6 @@
-package com.example.bcsd.article.repository;
+package com.example.bcsd.board.repository;
 
-import com.example.bcsd.article.model.Board;
+import com.example.bcsd.board.model.Board;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +9,9 @@ import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
+import org.springframework.stereotype.Repository;
+
+@Repository
 public class BoardRepository {
     private final Map<Long, Board> boardDB = new ConcurrentHashMap<>();
     private final AtomicLong idCounter = new AtomicLong();

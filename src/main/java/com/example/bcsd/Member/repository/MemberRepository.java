@@ -1,6 +1,6 @@
-package com.example.bcsd.article.repository;
+package com.example.bcsd.member.repository;
 
-import com.example.bcsd.article.model.Member;
+import com.example.bcsd.member.model.Member;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +9,9 @@ import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
+import org.springframework.stereotype.Repository;
+
+@Repository
 public class MemberRepository {
     private final Map<Long, Member> memberDB = new ConcurrentHashMap<>();
     private final AtomicLong idCounter = new AtomicLong();
