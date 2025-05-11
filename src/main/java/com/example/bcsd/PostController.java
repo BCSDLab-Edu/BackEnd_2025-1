@@ -9,7 +9,7 @@ public class PostController {
     // GET /posts
     @GetMapping("/posts")
     public String showPosts(Model model) {
-        model.addAttribute("articles", ArticleController.articleList); // static 리스트 사용
+        model.addAttribute("articles", ArticleService.articleList); // static 리스트 사용
         return "posts"; // templates/posts.html 렌더링
     }
 }
