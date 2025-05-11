@@ -27,6 +27,7 @@ public record CreateArticleRequest(
         article.setBoardId(boardId);
         article.setContent(content);
         article.setCreatedDate(LocalDateTime.now());
+
         return article;
     }
 }

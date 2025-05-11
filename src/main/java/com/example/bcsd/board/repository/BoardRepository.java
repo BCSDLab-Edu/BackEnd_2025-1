@@ -20,6 +20,7 @@ public class BoardRepository {
         Long id = idCounter.getAndIncrement();
         board.setId(id);
         boardDB.put(id, board);
+
         return board;
     }
 
@@ -33,6 +34,7 @@ public class BoardRepository {
 
     public Board updateSave(Board board) {
         boardDB.put(board.getId(), board);
+
         return board;
     }
 

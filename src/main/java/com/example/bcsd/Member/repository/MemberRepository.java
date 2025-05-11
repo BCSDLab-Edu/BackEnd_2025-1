@@ -20,6 +20,7 @@ public class MemberRepository {
         Long id = idCounter.getAndIncrement();
         member.setId(id);
         memberDB.put(id, member);
+
         return member;
     }
 

@@ -20,6 +20,7 @@ public class ArticleRepository {
         Long id = idCounter.getAndIncrement();
         article.setId(id);
         articleDB.put(id, article);
+
         return article;
     }
 
@@ -33,6 +34,7 @@ public class ArticleRepository {
 
     public Article updateSave(Article article) {
         articleDB.put(article.getId(), article);
+
         return article;
     }
 

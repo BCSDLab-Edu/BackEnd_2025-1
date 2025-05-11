@@ -29,6 +29,7 @@ public class ArticleController {
             @RequestBody @Valid CreateArticleRequest request
     ) {
         articleService.CreateArticle(request);
+
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
@@ -50,6 +51,7 @@ public class ArticleController {
             @RequestBody UpdateArticleRequest request
     ) {
         UpdateArticleResponse res = articleService.updateArticle(id, request);
+
         return ResponseEntity.ok(res);
     }
 
@@ -58,6 +60,7 @@ public class ArticleController {
             @PathVariable("id") Long id
     ) {
         articleService.DeleteArticle(id);
+
         return ResponseEntity.noContent().build();
     }
 }

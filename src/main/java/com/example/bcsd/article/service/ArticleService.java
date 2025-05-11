@@ -3,6 +3,7 @@ package com.example.bcsd.article.service;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import java.util.HashMap;
 
 import com.example.bcsd.article.dto.UpdateArticleRequest;
@@ -37,7 +38,24 @@ public class ArticleService {
         List<Long> authorIds = articles.stream().map(Article::getAuthorId).distinct().toList();
 
         Map<Long, String> authorNames = new HashMap<>();
-        for(Long id : authorIds) {
+        for (Long id : authorIds) {
+            memberRepository.findById(id).ifPresent(member -> authorNames.put(id, member.getName()));
+        }
+
+        List<GetArticleResponse> getArticleResponses = articles.stream().map(article -> {
+            String authorName = authorNames.getOrDefault(article.getAuthorId(), "Unknown Author");
+            return GetArticleResponse.from(article, authorName);
+        }).toList();
+
+        return new GetArticlesResponse(getArticleResponses, articles.size());
+    }
+
+    public GetArticlesResponse GetArticlesByBoardId(Long boardId) {
+        List<Article> articles = articleRepository.findAll().stream().filter(article -> article.getBoardId().equals(boardId)).collect(Collectors.toList());
+        List<Long> authorIds = articles.stream().map(Article::getAuthorId).distinct().toList();
+
+        Map<Long, String> authorNames = new HashMap<>();
+        for (Long id : authorIds) {
             memberRepository.findById(id).ifPresent(member -> authorNames.put(id, member.getName()));
         }
 
@@ -52,6 +70,7 @@ public class ArticleService {
     public GetArticleResponse GetArticle(Long id) {
         Article article = articleRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Article not found"));
         String author = memberRepository.findById(article.getId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Author not found")).getName();
+
         return GetArticleResponse.from(article, author);
     }
 
@@ -79,6 +98,7 @@ public class ArticleService {
         article.setEditedDate(LocalDateTime.now());
 
         articleRepository.updateSave(article);
+
         return UpdateArticleResponse.from(article);
     }
 
