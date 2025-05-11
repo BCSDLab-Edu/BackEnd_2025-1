@@ -13,7 +13,9 @@ import java.time.LocalDateTime;
 public class ArticleController {
     static List<Article> articleList = new ArrayList<>();
     int currentId = 1;
-    LocalDateTime now = LocalDateTime.now();
+    static LocalDateTime now = LocalDateTime.now();
+
+    static void updateTime() { now = LocalDateTime.now(); }
 
     // GET /articles/{id}
     @GetMapping("/{id}")
@@ -29,8 +31,12 @@ public class ArticleController {
     // POST /articles
     @PostMapping
     public ResponseEntity<Article> createArticle(@RequestBody Article article) {
+        updateTime();
         article.setId(currentId++);
-        article.setDate(now);
+        article.setMemberId(0);
+        article.setBoardId(0);
+        article.setCreatedDate(now);
+        article.setEditedDate(now);
         articleList.add(article);
         return ResponseEntity.ok(article);
     }
@@ -40,9 +46,12 @@ public class ArticleController {
     public ResponseEntity<Article> updateArticle(@PathVariable int id, @RequestBody Article updatedArticle) {
         for (Article article : articleList) {
             if (article.getId() == id) {
+                updateTime();
+                article.setBoardId(updatedArticle.getBoardId());
                 article.setTitle(updatedArticle.getTitle());
                 article.setAuthor(updatedArticle.getAuthor());
                 article.setContent(updatedArticle.getContent());
+                article.setEditedDate(now);
                 return ResponseEntity.ok(article);
             }
         }
