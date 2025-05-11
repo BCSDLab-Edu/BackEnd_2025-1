@@ -62,4 +62,10 @@ public class ArticleController {
         }
         return ResponseEntity.notFound().build();
     }
+
+    // GET /articles
+    @GetMapping()
+    public ResponseEntity<List<Article>> viewArticles() {
+        return ResponseEntity.ok(articleList);
+    }
 }
