@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @RestController
 @RequestMapping("/articles")
 public class ArticleController {
-    List<Article> articleList = new ArrayList<>();
+    static List<Article> articleList = new ArrayList<>();
     int currentId = 1;
     LocalDateTime now = LocalDateTime.now();
 
