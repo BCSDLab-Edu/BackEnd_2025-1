@@ -6,12 +6,14 @@ import org.springframework.http.ResponseEntity;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Iterator;
+import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("/articles")
 public class ArticleController {
     List<Article> articleList = new ArrayList<>();
     int currentId = 1;
+    LocalDateTime now = LocalDateTime.now();
 
     // GET /articles/{id}
     @GetMapping("/{id}")
@@ -28,6 +30,7 @@ public class ArticleController {
     @PostMapping
     public ResponseEntity<Article> createArticle(@RequestBody Article article) {
         article.setId(currentId++);
+        article.setDate(now);
         articleList.add(article);
         return ResponseEntity.ok(article);
     }
@@ -38,6 +41,7 @@ public class ArticleController {
         for (Article article : articleList) {
             if (article.getId() == id) {
                 article.setTitle(updatedArticle.getTitle());
+                article.setAuthor(updatedArticle.getAuthor());
                 article.setContent(updatedArticle.getContent());
                 return ResponseEntity.ok(article);
             }
