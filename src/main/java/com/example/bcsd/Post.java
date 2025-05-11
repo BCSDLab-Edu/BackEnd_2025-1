@@ -3,26 +3,32 @@ package com.example.bcsd;
 import java.time.LocalDate;
 
 public class Post {
-    protected Integer post_num;
-    protected String title;
-    protected String text;
-    protected LocalDate creation_date;
-    protected LocalDate modification_date;
+    private Integer postNum;
+    private String title;
+    private String text;
+    private LocalDate creationDate;
+    private LocalDate modificationDate;
 
-    public Post() {
-        Integer post_num;
-        String title;
-        String text;
-        LocalDate creation_date;
-        LocalDate modification_date = null;
+    public Post(
+            Integer postNum,
+            String title,
+            String text,
+            LocalDate creationDate,
+            LocalDate modificationDate
+    ) {
+        this.postNum = postNum;
+        this.title = title;
+        this.text = text;
+        this.creationDate = creationDate;
+        this.modificationDate = modificationDate;
     }
 
-    public Integer getPost_num() {
-        return post_num;
+    public Integer getPostNum() {
+        return postNum;
     }
 
-    public void setPost_num(Integer post_num) {
-        this.post_num = post_num;
+    public void setPost_num(Integer postNum) {
+        this.postNum = postNum;
     }
 
     public String getTitle() {
@@ -41,19 +47,19 @@ public class Post {
         this.text = text;
     }
 
-    public LocalDate getCreation_date() {
-        return creation_date;
+    public LocalDate getCreationDate() {
+        return creationDate;
     }
 
-    public void setCreation_date(LocalDate creation_date) {
-        this.creation_date = creation_date;
+    public void setCreationDate(LocalDate creationDate) {
+        this.creationDate = creationDate;
     }
 
-    public LocalDate getModification_date() {
-        return modification_date;
+    public LocalDate getModificationDate() {
+        return modificationDate;
     }
 
-    public void setModification_date(LocalDate modification_date) {
-        this.modification_date = modification_date;
+    public void setModificationDate(LocalDate modificationDate) {
+        this.modificationDate = modificationDate;
     }
 }
