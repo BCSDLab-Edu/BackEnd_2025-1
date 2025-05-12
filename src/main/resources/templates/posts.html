@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+
+<head>
+    <title>All Articles</title>
+</head>
+<body>
+<h1>Articles</h1>
+<ul>
+    <li th:each="article : ${articles}">
+        <strong th:text="${article.title}"></strong><br>
+        <span th:text="${article.content}"></span>
+    </li>
+</ul>
+</body>
+</html>
