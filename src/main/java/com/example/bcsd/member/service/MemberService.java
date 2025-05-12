@@ -1,0 +1,26 @@
+package com.example.bcsd.member.service;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
+
+import com.example.bcsd.member.model.Member;
+import com.example.bcsd.member.dto.RegisterRequest;
+import com.example.bcsd.member.repository.MemberRepository;
+
+@Service
+public class MemberService {
+    private final MemberRepository memberRepository;
+
+    public MemberService(MemberRepository memberRepository) {
+        this.memberRepository = memberRepository;
+    }
+
+    public void Register(RegisterRequest request) {
+        memberRepository.save(request.toMember());
+    }
+
+    public Member GetMember(Long id) {
+        return memberRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Member not found"));
+    }
+}
