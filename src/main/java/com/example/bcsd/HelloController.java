@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RequestParam;
+
 @Controller
 public class HelloController {
 
@@ -21,13 +22,13 @@ public class HelloController {
     }
 
     @GetMapping(value = "/introduce", params = "!name")
-    public String introducePage(){
+    public String introducePage() {
         return "MyName";
     }
 
     @GetMapping("/json")
     @ResponseBody
-    public UserInfo getUser(){
-        return new UserInfo(23,"민경민");
+    public UserInfo getUser() {
+        return new UserInfo(23, "민경민");
     }
 }

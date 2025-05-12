@@ -1,15 +1,22 @@
 package com.example.bcsd;
 
 import java.util.*;
+
 import org.springframework.stereotype.Service;
 
 @Service
 public class ArticleService {
-    private Map<Long, Article> articleData = new HashMap<>();
+    private final Map<Long, Article> articleData = new HashMap<>();
+    private Long nextId = 1L;
 
     // Create
-    public void addArticle(Article article) {
-        articleData.put(article.getId(), article);
+    public void createArticle(Article article) {
+        Long id = article.getId();
+        if (id == null) {
+            id = nextId++;
+        }
+        Article newArticle = new Article(id, article.getTitle(), article.getContent());
+        articleData.put(id, newArticle);
     }
 
     // Read all
@@ -24,7 +31,10 @@ public class ArticleService {
 
     // Update
     public void updateArticle(Long id, Article updated) {
-        articleData.put(id, updated);
+        Article existing = articleData.get(id);
+        if (existing != null) {
+            existing.update(updated.getTitle(), updated.getContent());
+        }
     }
 
     // Delete
