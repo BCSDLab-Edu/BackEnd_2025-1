@@ -2,6 +2,7 @@ package com.example.bcsd;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import java.util.List;
 
 @RestController
 @RequestMapping("/articles")
@@ -11,6 +12,11 @@ public class ArticleController {
 
     public ArticleController(ArticleService service) {
         this.service = service;
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Article>> getAllArticles() {
+        return ResponseEntity.ok(service.getAllArticles());
     }
 
     // GET /articles/{id}
