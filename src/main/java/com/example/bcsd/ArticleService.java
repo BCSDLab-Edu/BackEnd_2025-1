@@ -31,4 +31,8 @@ public class ArticleService {
     public boolean deleteArticle(Long id) {
         return articleMap.remove(id) != null;
     }
+
+    public List<Article> getAllArticles() {
+        return new ArrayList<>(articleMap.values());
+    }
 }
