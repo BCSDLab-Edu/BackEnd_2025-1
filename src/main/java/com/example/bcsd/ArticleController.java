@@ -1,50 +1,51 @@
 package com.example.bcsd;
 
 import org.springframework.web.bind.annotation.*;
-
-import java.util.HashMap;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.servlet.ModelAndView;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicLong;
 
 @RestController
-@RequestMapping("/articles")
 public class ArticleController {
-    private Map<Long, String> articles = new HashMap<>();
-    private AtomicLong idCounter = new AtomicLong(1);
 
-    // CREATE
-    @PostMapping
+    private final ArticleService articleService;
+
+    public ArticleController(ArticleService articleService) {
+        this.articleService = articleService;
+    }
+
+    @PostMapping("/articles")
     public String create(@RequestBody String content) {
-        long id = idCounter.getAndIncrement();
-        articles.put(id, content);
-        return "Created article with id: " + id;
+        long id = articleService.create(content);
+        return "아티클을 생성했습니다. ID: " + id;
     }
 
-    // READ
-    @GetMapping("/{id}")
+    @GetMapping("/articles/{id}")
     public String read(@PathVariable Long id) {
-        return articles.getOrDefault(id, "Article not found");
+        return articleService.read(id);
     }
 
-    // UPDATE
-    @PutMapping("/{id}")
+    @PutMapping("/articles/{id}")
     public String update(@PathVariable Long id, @RequestBody String content) {
-        if (articles.containsKey(id)) {
-            articles.put(id, content);
-            return "Updated article with id: " + id;
-        } else {
-            return "Article not found";
-        }
+        return articleService.update(id, content);
     }
 
-    // DELETE
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/articles/{id}")
     public String delete(@PathVariable Long id) {
-        if (articles.containsKey(id)) {
-            articles.remove(id);
-            return "Deleted article with id: " + id;
-        } else {
-            return "Article not found";
-        }
+        return articleService.delete(id);
+    }
+
+    @GetMapping("/posts")
+    public ModelAndView posts() {
+        ModelAndView mav = new ModelAndView("posts");
+        mav.addObject("posts", articleService.findAll());
+        return mav;
+    }
+    @GetMapping("/articles")
+    public ResponseEntity<Map<Long, String>> articles() {
+        return ResponseEntity
+                .ok()
+                .header("Content-Type", "application/json; charset=UTF-8")
+                .body(articleService.findAll());
     }
 }

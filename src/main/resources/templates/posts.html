@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>모든 게시글</title>
+</head>
+<body>
+<h1>게시글 목록</h1>
+<ul>
+    <li th:each="entry : ${posts}">
+        <b th:text="${entry.key}"></b> : <span th:text="${entry.value}"></span>
+    </li>
+</ul>
+</body>
+</html>
