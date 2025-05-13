@@ -51,6 +51,13 @@ public class ArticleService {
                 .orElseThrow(() -> new NullPointerException(""));
     }
 
+    public List<ArticleResponseDto> getArticlesByBoardId(Long boardId) {
+        return articleRepository.findByBoardId(boardId).stream()
+                .map(ArticleResponseDto::new)
+                .collect(Collectors.toList());
+    }
+
+
     public ArticleResponseDto createArticle(ArticleRequestDto dto) {
         if (!memberRepository.findById(dto.getWriterId()).isPresent()) {
             throw new IllegalArgumentException("해당 작성자를 찾을 수 없습니다.");
@@ -80,6 +87,8 @@ public class ArticleService {
         article.setTitle(dto.getTitle());
         article.setContent(dto.getContent());
         article.setModifiedDate(LocalDateTime.now());
+
+        articleRepository.update(article);
 
         return new ArticleResponseDto(article);
     }
