@@ -1,6 +1,6 @@
 package com.example.bcsd.repository;
 
-import com.example.hellospring.domain.Member;
+import com.example.bcsd.domain.Member;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;

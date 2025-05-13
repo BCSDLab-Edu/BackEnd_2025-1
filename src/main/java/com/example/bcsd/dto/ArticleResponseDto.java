@@ -1,6 +1,6 @@
 package com.example.bcsd.dto;
 
-import com.example.hellospring.domain.Article;
+import com.example.bcsd.domain.Article;
 
 import java.time.LocalDateTime;
 

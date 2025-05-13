@@ -1,8 +1,8 @@
 package com.example.bcsd.service;
 
-import com.example.hellospring.domain.Member;
-import com.example.hellospring.dto.MemberRequestDto;
-import com.example.hellospring.repository.MemberRepository;
+import com.example.bcsd.domain.Member;
+import com.example.bcsd.dto.MemberRequestDto;
+import com.example.bcsd.repository.MemberRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

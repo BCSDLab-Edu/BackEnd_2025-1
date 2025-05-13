@@ -1,8 +1,8 @@
 package com.example.bcsd.service;
 
-import com.example.hellospring.domain.Board;
-import com.example.hellospring.dto.BoardRequestDto;
-import com.example.hellospring.repository.BoardRepository;
+import com.example.bcsd.domain.Board;
+import com.example.bcsd.dto.BoardRequestDto;
+import com.example.bcsd.repository.BoardRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

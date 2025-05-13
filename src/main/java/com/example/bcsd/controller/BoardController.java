@@ -1,8 +1,8 @@
 package com.example.bcsd.controller;
 
-import com.example.hellospring.domain.Board;
-import com.example.hellospring.dto.BoardRequestDto;
-import com.example.hellospring.service.BoardService;
+import com.example.bcsd.domain.Board;
+import com.example.bcsd.dto.BoardRequestDto;
+import com.example.bcsd.service.BoardService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

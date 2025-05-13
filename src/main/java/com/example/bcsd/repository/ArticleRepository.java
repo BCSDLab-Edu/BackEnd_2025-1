@@ -1,6 +1,6 @@
 package com.example.bcsd.repository;
 
-import com.example.hellospring.domain.Article;
+import com.example.bcsd.domain.Article;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;

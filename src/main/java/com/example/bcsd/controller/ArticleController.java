@@ -1,9 +1,9 @@
 package com.example.bcsd.controller;
 
-import com.example.hellospring.dto.ArticleListResponseDto;
-import com.example.hellospring.dto.ArticleRequestDto;
-import com.example.hellospring.dto.ArticleResponseDto;
-import com.example.hellospring.service.ArticleService;
+import com.example.bcsd.dto.ArticleListResponseDto;
+import com.example.bcsd.dto.ArticleRequestDto;
+import com.example.bcsd.dto.ArticleResponseDto;
+import com.example.bcsd.service.ArticleService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

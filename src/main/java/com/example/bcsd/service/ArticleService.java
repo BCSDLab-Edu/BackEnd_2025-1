@@ -1,13 +1,13 @@
 package com.example.bcsd.service;
 
-import com.example.hellospring.domain.Article;
-import com.example.hellospring.domain.Board;
-import com.example.hellospring.dto.ArticleListResponseDto;
-import com.example.hellospring.dto.ArticleRequestDto;
-import com.example.hellospring.dto.ArticleResponseDto;
-import com.example.hellospring.repository.ArticleRepository;
-import com.example.hellospring.repository.BoardRepository;
-import com.example.hellospring.repository.MemberRepository;
+import com.example.bcsd.domain.Article;
+import com.example.bcsd.domain.Board;
+import com.example.bcsd.dto.ArticleListResponseDto;
+import com.example.bcsd.dto.ArticleRequestDto;
+import com.example.bcsd.dto.ArticleResponseDto;
+import com.example.bcsd.repository.ArticleRepository;
+import com.example.bcsd.repository.BoardRepository;
+import com.example.bcsd.repository.MemberRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
