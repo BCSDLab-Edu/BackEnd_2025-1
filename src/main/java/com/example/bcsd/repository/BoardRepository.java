@@ -1,6 +1,8 @@
 package com.example.bcsd.repository;
 
 import com.example.bcsd.domain.Board;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -9,22 +11,30 @@ import java.util.Optional;
 
 @Repository
 public class BoardRepository {
-    private final List<Board> boards = new ArrayList<>();
+    private final JdbcTemplate jdbcTemplate;
+
+    public BoardRepository(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
+
+    private RowMapper<Board> boardRowMapper = (rs, rowNum) ->
+            new Board(rs.getLong("id"), rs.getString("name"));
 
     public List<Board> findAll() {
-        return boards;
+        return jdbcTemplate.query("SELECT * FROM board", boardRowMapper);
     }
 
     public Optional<Board> findById(Long id) {
-        return boards.stream().filter(b -> b.getId().equals(id)).findFirst();
+        List<Board> result = jdbcTemplate.query("SELECT * FROM board WHERE id = ?", boardRowMapper, id);
+        return result.stream().findFirst();
     }
 
     public Board save(Board board) {
-        boards.add(board);
+        jdbcTemplate.update("INSERT INTO board (id, name) VALUES (?, ?)", board.getId(), board.getName());
         return board;
     }
 
     public boolean deleteById(Long id) {
-        return boards.removeIf(b -> b.getId().equals(id));
+        return jdbcTemplate.update("DELETE FROM board WHERE id = ?", id) > 0;
     }
 }
