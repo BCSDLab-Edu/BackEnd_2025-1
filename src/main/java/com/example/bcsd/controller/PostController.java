@@ -35,6 +35,6 @@ public class PostController {
         model.addAttribute("boardName", boardName);
         model.addAttribute("articles", articles);
 
-        return "postListByBoard"; // 위에 작성한 HTML 파일 이름
+        return "postViewByBoard"; // 위에 작성한 HTML 파일 이름
     }
 }
