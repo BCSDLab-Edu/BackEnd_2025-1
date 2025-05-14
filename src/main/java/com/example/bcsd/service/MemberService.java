@@ -4,6 +4,7 @@ import com.example.bcsd.domain.Member;
 import com.example.bcsd.dto.MemberRequestDto;
 import com.example.bcsd.repository.MemberRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -24,11 +25,13 @@ public class MemberService {
                 .orElseThrow(() -> new NullPointerException(""));
     }
 
+    @Transactional
     public Member createMember(MemberRequestDto dto) {
         Member member = new Member(dto.getId(), dto.getName(), dto.getEmail(), dto.getPassword());
         return memberRepository.save(member);
     }
 
+    @Transactional
     public void deleteMember(Long id) {
         if (!memberRepository.deleteById(id)) {
             throw new NullPointerException("");

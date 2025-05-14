@@ -9,6 +9,7 @@ import com.example.bcsd.repository.ArticleRepository;
 import com.example.bcsd.repository.BoardRepository;
 import com.example.bcsd.repository.MemberRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -58,6 +59,7 @@ public class ArticleService {
     }
 
 
+    @Transactional
     public ArticleResponseDto createArticle(ArticleRequestDto dto) {
         if (!memberRepository.findById(dto.getWriterId()).isPresent()) {
             throw new IllegalArgumentException("해당 작성자를 찾을 수 없습니다.");
@@ -80,6 +82,7 @@ public class ArticleService {
         return new ArticleResponseDto(article);
     }
 
+    @Transactional
     public ArticleResponseDto updateArticle(Long id, ArticleRequestDto dto) {
         Article article = articleRepository.findById(id)
                 .orElseThrow(() -> new NullPointerException(""));
@@ -93,6 +96,7 @@ public class ArticleService {
         return new ArticleResponseDto(article);
     }
 
+    @Transactional
     public void deleteArticle(Long id) {
         if (!articleRepository.deleteById(id)) {
             throw new NullPointerException("");
