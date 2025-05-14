@@ -27,6 +27,11 @@ public class ArticleController {
         return articleService.getArticleById(id);
     }
 
+    @GetMapping(params = "boardId")
+    public List<ArticleResponseDto> getArticlesByBoardId(@RequestParam Long boardId) {
+        return articleService.getArticlesByBoardId(boardId);
+    }
+
     @PostMapping
     public ArticleResponseDto createArticle(@RequestBody ArticleRequestDto dto) {
         return articleService.createArticle(dto);
