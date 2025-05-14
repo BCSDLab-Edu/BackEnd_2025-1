@@ -24,6 +24,11 @@ public class BoardService {
                 .orElseThrow(() -> new NullPointerException(""));
     }
 
+    public String getBoardNameById(Long id) {
+        return boardRepository.findNameById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시판이 존재하지 않습니다."));
+    }
+
     public Board createBoard(BoardRequestDto dto) {
         Board board = new Board(dto.getId(), dto.getName());
         return boardRepository.save(board);

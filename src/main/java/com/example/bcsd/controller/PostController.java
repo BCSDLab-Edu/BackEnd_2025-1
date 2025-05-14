@@ -14,9 +14,11 @@ import java.util.List;
 @Controller
 public class PostController {
     private final ArticleService articleService;
+    private final BoardService boardService;
 
     public PostController(ArticleService articleService, BoardService boardService) {
         this.articleService = articleService;
+        this.boardService = boardService;
     }
 
     @GetMapping("/posts")
@@ -27,8 +29,12 @@ public class PostController {
 
     @GetMapping(value = "/posts", params = "boardId")
     public String getPostViewByBoardId(@RequestParam Long boardId, Model model) {
+        String boardName = boardService.getBoardNameById(boardId); // boardId로 이름 가져오는 메소드
+        List<ArticleResponseDto> articles = articleService.getArticlesByBoardId(boardId);
 
-        model.addAttribute("articles", articleService.getArticlesByBoardId(boardId));
-        return "postView";
+        model.addAttribute("boardName", boardName);
+        model.addAttribute("articles", articles);
+
+        return "postListByBoard"; // 위에 작성한 HTML 파일 이름
     }
 }
