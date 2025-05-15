@@ -1,0 +1,17 @@
+package com.example.bcsd.dto.request;
+
+import com.example.bcsd.model.Member;
+
+public record MemberRequest(
+        String name,
+        String email,
+        String password
+) {
+    public Member toEntity() {
+        return Member.builder()
+                .name(name)
+                .email(email)
+                .password(password)
+                .build();
+    }
+}
