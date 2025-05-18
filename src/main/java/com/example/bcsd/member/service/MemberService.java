@@ -12,13 +12,19 @@ import com.example.bcsd.member.repository.MemberRepository;
 public class MemberService {
 
     private final MemberRepository memberRepository;
+    private final MemberValidator memberValidator;
 
-    public MemberService(MemberRepository memberRepository) {
+    public MemberService(MemberRepository memberRepository, MemberValidator memberValidator) {
         this.memberRepository = memberRepository;
+        this.memberValidator = memberValidator;
     }
 
     @Transactional
     public MemberResponse createMember(MemberCreateRequest request) {
+        memberValidator.validateEmail(request.email());
+        memberValidator.validatePassword(request.password());
+        memberValidator.validateName(request.name());
+
         memberRepository.findMemberByEmail(request.email())
             .ifPresent((member) -> {
                 throw new IllegalStateException("등록된 이메일입니다.");
