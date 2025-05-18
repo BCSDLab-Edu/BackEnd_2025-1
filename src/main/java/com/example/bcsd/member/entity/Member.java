@@ -1,4 +1,4 @@
-package com.example.bcsd.entity;
+package com.example.bcsd.member.entity;
 
 public class Member {
 

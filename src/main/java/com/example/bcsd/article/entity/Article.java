@@ -1,4 +1,4 @@
-package com.example.bcsd.entity;
+package com.example.bcsd.article.entity;
 
 import java.time.LocalDateTime;
 

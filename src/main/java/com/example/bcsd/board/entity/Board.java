@@ -1,4 +1,4 @@
-package com.example.bcsd.entity;
+package com.example.bcsd.board.entity;
 
 public class Board {
 
