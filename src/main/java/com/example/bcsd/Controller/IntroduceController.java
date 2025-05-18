@@ -1,4 +1,5 @@
-package com.example.bcsd;
+package com.example.bcsd.Controller;
+import com.example.bcsd.User;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
