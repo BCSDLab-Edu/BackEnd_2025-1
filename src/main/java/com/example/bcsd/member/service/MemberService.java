@@ -33,4 +33,11 @@ public class MemberService {
         Member createMember = memberRepository.save(request.toMember());
         return MemberResponse.of(createMember.getId(), createMember.getName(), createMember.getEmail());
     }
+
+    public MemberResponse getMember(Integer id) {
+        Member member = memberRepository.findMemberById(id)
+            .orElseThrow(() -> new IllegalStateException("등록되지 않은 멤버입니다."));
+
+        return MemberResponse.of(member.getId(), member.getName(), member.getEmail());
+    }
 }
