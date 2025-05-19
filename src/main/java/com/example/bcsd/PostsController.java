@@ -17,9 +17,11 @@ public class PostsController {
     @GetMapping("/posts")
     public String getPosts(@RequestParam Long boardId, Model model) {
         List<ArticleDto> list = articleService.getAllByBoardId(boardId);
-        String boardName = list.isEmpty() ? "게시판" : list.get(0).getBoardName();
+        String boardName = articleService.getBoardName(boardId);
+
         model.addAttribute("boardName", boardName);
         model.addAttribute("articles", list);
         return "posts";
     }
+
 }

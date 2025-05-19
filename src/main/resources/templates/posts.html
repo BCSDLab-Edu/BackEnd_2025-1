@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8">
     <title>Board Posts</title>
 </head>
 <body>
-<h1>Board: <span th:text="${boardName}">Board Name</span></h1>
+<h1>Board: <span th:text="${boardName}">게시판 이름</span></h1>
 <ul>
     <li th:each="article : ${articles}">
         <a th:href="@{/articles/{id}(id=${article.id})}"

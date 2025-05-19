@@ -37,4 +37,9 @@ public class ArticleController {
     public void delete(@PathVariable Long id) {
         articleService.deleteArticle(id);
     }
+
+    @GetMapping(params = "boardId")
+    public List<ArticleDto> getAllByBoardIdJson(@RequestParam Long boardId) {
+        return articleService.getAllByBoardId(boardId);
+    }
 }
