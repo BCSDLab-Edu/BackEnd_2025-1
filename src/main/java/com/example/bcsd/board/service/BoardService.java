@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.example.bcsd.board.model.Board;
@@ -26,6 +27,7 @@ public class BoardService {
         this.articleService = articleService;
     }
 
+    @Transactional
     public void CreateBoard(CreateBoardRequest request) {
         boardRepository.save(request.toBoard());
     }
@@ -47,6 +49,7 @@ public class BoardService {
         return boardRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Board not found"));
     }
 
+    @Transactional
     public UpdateBoardResponse UpdateBoard(Long id, UpdateBoardRequest request) {
         Board board = GetBoard(id);
         board.setName(request.name());

@@ -9,6 +9,7 @@ import java.util.HashMap;
 import com.example.bcsd.article.dto.UpdateArticleRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.example.bcsd.article.model.Article;
@@ -29,9 +30,11 @@ public class ArticleService {
         this.memberRepository = memberRepository;
     }
 
+    @Transactional
     public void CreateArticle(CreateArticleRequest request) {
         articleRepository.save(request.toArticle());
     }
+
 
     public GetArticlesResponse GetArticles() {
         List<Article> articles = articleRepository.findAll();
@@ -74,6 +77,7 @@ public class ArticleService {
         return GetArticleResponse.from(article, author);
     }
 
+    @Transactional
     public UpdateArticleResponse updateArticle(Long id, UpdateArticleRequest request) {
         Article article = articleRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Article not found"));
         String title = request.title();
@@ -102,6 +106,7 @@ public class ArticleService {
         return UpdateArticleResponse.from(article);
     }
 
+    @Transactional
     public void DeleteArticle(Long id) {
         articleRepository.delete(id);
     }

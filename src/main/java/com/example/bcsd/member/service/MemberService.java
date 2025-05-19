@@ -2,6 +2,7 @@ package com.example.bcsd.member.service;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.example.bcsd.member.model.Member;
@@ -16,6 +17,7 @@ public class MemberService {
         this.memberRepository = memberRepository;
     }
 
+    @Transactional
     public void Register(RegisterRequest request) {
         memberRepository.save(request.toMember());
     }
