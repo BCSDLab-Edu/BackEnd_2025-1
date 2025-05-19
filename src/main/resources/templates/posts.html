@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Board Posts</title>
+    <meta charset="UTF-8" />
+</head>
+<body>
+<h1 th:text="'Board: ' + ${boardName}">Board: 게시판이름</h1>
+
+<ul>
+    <li th:each="article : ${articles}">
+        <a th:href="@{'/articles/' + ${article.id}}"
+           th:text="${article.title}">게시물 제목</a>
+    </li>
+</ul>
+</body>
+</html>
