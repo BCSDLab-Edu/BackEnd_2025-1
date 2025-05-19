@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Board Posts</title>
+    </head>
+    <body>
+        <h1 th:text="'Board: ' + ${board.name}">Board Name</h1>
+        <ul>
+            <li th:each="article : ${articles.articles}"><a th:href="'/articles/' + ${article.id}" th:text="${article.title}">Article</a></li>
+        </ul>
+    </body>
+</html>
