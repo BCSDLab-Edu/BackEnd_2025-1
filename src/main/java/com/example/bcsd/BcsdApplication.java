@@ -6,8 +6,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class BcsdApplication {
 	public static void main(String[] args) {
-
-		SpringApplication.run(BcsdApplication.class, args);
+		try {
+			SpringApplication.run(BcsdApplication.class, args);
+		} catch (Exception e) {
+			e.printStackTrace();  // ❗ 콘솔에 진짜 에러 출력
+		}
 	}
-
 }

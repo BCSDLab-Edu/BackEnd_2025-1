@@ -1,39 +1,46 @@
 package com.example.bcsd.service;
 
-import com.example.bcsd.repository.ArticleRepository;
 import com.example.bcsd.model.Article;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.bcsd.repository.ArticleRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collection;
+import java.util.List;
 
 @Service
 public class ArticleService {
 
-    private final ArticleRepository articleRepository;
+    private final ArticleRepository repository;
 
-    @Autowired
-    public ArticleService(ArticleRepository articleRepository) {
-        this.articleRepository = articleRepository;
+    public ArticleService(ArticleRepository repository) {
+        this.repository = repository;
     }
 
+    @Transactional
     public Article createArticle(Article article) {
-        return articleRepository.save(article);
+        return repository.save(article);
     }
 
-    public Collection<Article> getAllArticles() {
-        return articleRepository.findAll();
+    public List<Article> getArticlesByBoardId(Long boardId) {
+        return repository.findByBoardId(boardId);
     }
 
-    public Article updateArticle(Long id, Article updatedArticle) {
-        return articleRepository.update(id, updatedArticle);
-    }
-
-    public String deleteArticle(Long id) {
-        return articleRepository.delete(id);
+    public List<Article> getAllArticles() {
+        return repository.findAll();
     }
 
     public Article getArticleById(Long id) {
-        return articleRepository.findById(id);
+        return repository.findById(id);
+    }
+
+    @Transactional
+    public Article updateArticle(Long id, Article article) {
+        repository.update(id, article);
+        return getArticleById(id);
+    }
+
+    @Transactional
+    public void deleteArticle(Long id) {
+        repository.delete(id);
     }
 }
