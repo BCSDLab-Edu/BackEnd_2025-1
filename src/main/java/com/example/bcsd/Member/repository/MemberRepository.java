@@ -1,43 +1,55 @@
 package com.example.bcsd.member.repository;
 
 import com.example.bcsd.member.model.Member;
+import com.example.bcsd.member.util.MemberUtil;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicLong;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class MemberRepository {
-    private final Map<Long, Member> memberDB = new ConcurrentHashMap<>();
-    private final AtomicLong idCounter = new AtomicLong();
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
     public Member save(Member member) {
-        Long id = idCounter.getAndIncrement();
-        member.setId(id);
-        memberDB.put(id, member);
+        String sql = "INSERT INTO member (name, email, password) VALUES (?, ?, ?)";
+
+        jdbcTemplate.update(sql, member.getName(), member.getEmail(), MemberUtil.Pass2Hash( member.getPassword()));
 
         return member;
     }
 
     public Optional<Member> findById(Long id) {
-        return Optional.ofNullable(memberDB.get(id));
+        String sql = "SELECT * FROM member WHERE id = ?";
+        try {
+            Member member = jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Member.class), id);
+
+            return Optional.ofNullable(member);
+        } catch(EmptyResultDataAccessException e) {
+            return Optional.empty();
+        }
     }
 
     public List<Member> findAll() {
-        return new ArrayList<>(memberDB.values());
+        String sql = "SELECT * FROM member";
+        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Member.class));
     }
 
     public Member updateSave(Member member) {
-        memberDB.put(member.getId(), member);
+        String sql = "UPDATE member SET name = ?, email = ?, password = ?";
+        jdbcTemplate.update(sql, member.getName(), member.getEmail(), MemberUtil.Pass2Hash(member.getPassword()));
+
         return member;
     }
 
     public void delete(Long id) {
-        memberDB.remove(id);
+        String sql = "DELETE FROM member WHERE id = ?";
+        jdbcTemplate.update(sql, id);
     }
 }

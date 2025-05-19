@@ -1,44 +1,53 @@
 package com.example.bcsd.article.repository;
 
 import java.util.List;
-import java.util.ArrayList;
-import java.util.Map;
 import java.util.Optional;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicLong;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.example.bcsd.article.model.Article;
 
 @Repository
 public class ArticleRepository {
-    private final Map<Long, Article> articleDB = new ConcurrentHashMap<>();
-    private final AtomicLong idCounter = new AtomicLong();
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
     public Article save(Article article) {
-        Long id = idCounter.getAndIncrement();
-        article.setId(id);
-        articleDB.put(id, article);
+        String sql = "INSERT INTO article (author_id, board_id, title, content) VALUES (?, ?, ?, ?)";
+        jdbcTemplate.update(sql, article.getAuthorId(), article.getBoardId(), article.getTitle(), article.getContent());
 
         return article;
     }
 
     public Optional<Article> findById(Long id) {
-        return Optional.ofNullable(articleDB.get(id));
+        String sql = "SELECT * FROM article WHERE id = ?";
+        try {
+            Article article = jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Article.class), id);
+
+            return Optional.ofNullable(article);
+        } catch(EmptyResultDataAccessException e) {
+            return Optional.empty();
+        }
     }
 
     public List<Article> findAll() {
-        return new ArrayList<>(articleDB.values());
+        String sql = "SELECT * FROM article";
+        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Article.class));
     }
 
     public Article updateSave(Article article) {
-        articleDB.put(article.getId(), article);
+        String sql = "UPDATE article SET board_id = ?, title = ?, content = ? WHERE id = ?";
+        jdbcTemplate.update(sql, article.getBoardId(), article.getTitle(), article.getContent(), article.getId());
 
         return article;
     }
 
     public void delete(Long id) {
-        articleDB.remove(id);
+        String sql = "DELETE FROM article WHERE id = ?";
+        jdbcTemplate.update(sql, id);
     }
 }

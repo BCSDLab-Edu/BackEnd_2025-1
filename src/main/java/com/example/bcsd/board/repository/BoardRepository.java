@@ -2,43 +2,52 @@ package com.example.bcsd.board.repository;
 
 import com.example.bcsd.board.model.Board;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicLong;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class BoardRepository {
-    private final Map<Long, Board> boardDB = new ConcurrentHashMap<>();
-    private final AtomicLong idCounter = new AtomicLong();
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
     public Board save(Board board) {
-        Long id = idCounter.getAndIncrement();
-        board.setId(id);
-        boardDB.put(id, board);
+        String sql = "INSERT INTO board (name) VALUES (?)";
+        jdbcTemplate.update(sql, board.getName());
 
         return board;
     }
 
     public Optional<Board> findById(Long id) {
-        return Optional.ofNullable(boardDB.get(id));
+        String sql = "SELECT * FROM board WHERE id = ?";
+        try {
+            Board board = jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Board.class), id);
+
+            return Optional.ofNullable(board);
+        } catch(EmptyResultDataAccessException e) {
+            return Optional.empty();
+        }
     }
 
     public List<Board> findAll() {
-        return new ArrayList<>(boardDB.values());
+        String sql = "SELECT * FROM board";
+        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Board.class));
     }
 
     public Board updateSave(Board board) {
-        boardDB.put(board.getId(), board);
+        String sql = "UPDATE board SET name = ? WHERE id = ?";
+        jdbcTemplate.update(sql, board.getName(), board.getId());
 
         return board;
     }
 
     public void delete(Long id) {
-        boardDB.remove(id);
+        String sql = "DELETE FROM board WHERE id = ?";
+        jdbcTemplate.update(sql, id);
     }
 }

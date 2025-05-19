@@ -69,7 +69,7 @@ public class ArticleService {
 
     public GetArticleResponse GetArticle(Long id) {
         Article article = articleRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Article not found"));
-        String author = memberRepository.findById(article.getId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Author not found")).getName();
+        String author = memberRepository.findById(article.getAuthorId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Author not found")).getName();
 
         return GetArticleResponse.from(article, author);
     }
