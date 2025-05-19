@@ -1,57 +1,40 @@
 package com.example.bcsd;
 
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
-import java.util.HashMap;
-import java.util.Map;
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
 
 @RestController
-@RequestMapping("/article")
+@RequestMapping("/articles")
 public class ArticleController {
 
-    private final Map<Long, Article> articleStore = new HashMap<>();
-    private long nextId = 1;
+    private final ArticleService articleService;
 
-    @PostMapping
-    public ResponseEntity<Article> createArticle(@RequestBody Article article) {
-        article.setPostId(nextId++);
-        articleStore.put(article.getPostId(), article);
-        return ResponseEntity.ok(article);
+    public ArticleController(ArticleService articleService) {
+        this.articleService = articleService;
+    }
+
+    @GetMapping
+    public List<Article> getAll() {
+        return articleService.getAllArticles();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Article> getArticle(@PathVariable Long id) {
-        Article article = articleStore.get(id);
-        if (article == null) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(article);
+    public Article getOne(@PathVariable Long id) {
+        return articleService.getArticleById(id);
+    }
+
+    @PostMapping
+    public void create(@RequestBody Article article) {
+        articleService.addArticle(article);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Article> updateArticle(@PathVariable Long id, @RequestBody Article updatedData) {
-        Article article = articleStore.get(id);
-        if (article == null) {
-            return ResponseEntity.notFound().build();
-        }
-        article.setTitle(updatedData.getTitle());
-        article.setContent(updatedData.getContent());
-        return ResponseEntity.ok(article);
+    public void update(@PathVariable Long id, @RequestBody Article article) {
+        articleService.updateArticle(id, article);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteArticle(@PathVariable Long id) {
-        if (!articleStore.containsKey(id)) {
-            return ResponseEntity.notFound().build();
-        }
-        articleStore.remove(id);
-        return ResponseEntity.noContent().build();
+    public void delete(@PathVariable Long id) {
+        articleService.deleteArticle(id);
     }
 }

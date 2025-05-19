@@ -10,12 +10,12 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Article {
+public class ArticleDto {
     private Long id;
-    private Long authorId;
-    private Long boardId;
     private String title;
     private String content;
+    private String authorName;
+    private String boardName;
     private LocalDateTime createdDate;
     private LocalDateTime modifiedDate;
 }
