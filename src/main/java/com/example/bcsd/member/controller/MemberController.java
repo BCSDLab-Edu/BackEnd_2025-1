@@ -1,6 +1,7 @@
 package com.example.bcsd.member.controller;
 
 import java.net.URI;
+import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,6 +38,12 @@ public class MemberController {
         @PathVariable(name = "id") Integer id
     ) {
         MemberResponse response = memberService.getMember(id);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<MemberResponse>> getMembers() {
+        List<MemberResponse> response = memberService.getMembers();
         return ResponseEntity.ok(response);
     }
 }

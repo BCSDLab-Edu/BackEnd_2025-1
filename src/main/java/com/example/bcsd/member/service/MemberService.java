@@ -1,5 +1,7 @@
 package com.example.bcsd.member.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,5 +41,12 @@ public class MemberService {
             .orElseThrow(() -> new IllegalStateException("등록되지 않은 멤버입니다."));
 
         return MemberResponse.of(member.getId(), member.getName(), member.getEmail());
+    }
+
+    public List<MemberResponse> getMembers() {
+        List<Member> members = memberRepository.findMemberAll();
+        return members.stream()
+            .map(member -> MemberResponse.of(member.getId(), member.getName(), member.getEmail()))
+            .toList();
     }
 }

@@ -50,6 +50,12 @@ public class JdbcMemberRepository implements MemberRepository {
         return result.stream().findFirst();
     }
 
+    @Override
+    public List<Member> findMemberAll() {
+        String sql = "SELECT id, name, email, password FROM member";
+        return jdbcTemplate.query(sql, memberRowMapper);
+    }
+
     private static final RowMapper<Member> memberRowMapper = (rs, rowNum) -> new Member(
         rs.getInt("id"),
         rs.getString("name"),
