@@ -38,22 +38,30 @@ public class JdbcMemberRepository implements MemberRepository {
 
     @Override
     public Optional<Member> findMemberByEmail(String email) {
-        String sql = "SELECT id, name, email, password FROM member WHERE email = ?";
-        List<Member> result = jdbcTemplate.query(sql, memberRowMapper, email);
+        List<Member> result = jdbcTemplate.query("""
+            SELECT id, name, email, password 
+            FROM member 
+            WHERE email = ?
+            """, memberRowMapper, email);
         return result.stream().findFirst();
     }
 
     @Override
     public Optional<Member> findMemberById(Integer id) {
-        String sql = "SELECT id, name, email, password FROM member WHERE id = ?";
-        List<Member> result = jdbcTemplate.query(sql, memberRowMapper, id);
+        List<Member> result = jdbcTemplate.query("""
+            SELECT id, name, email, password 
+            FROM member 
+            WHERE id = ?
+            """, memberRowMapper, id);
         return result.stream().findFirst();
     }
 
     @Override
     public List<Member> findMemberAll() {
-        String sql = "SELECT id, name, email, password FROM member";
-        return jdbcTemplate.query(sql, memberRowMapper);
+        return jdbcTemplate.query("""
+            SELECT id, name, email, password 
+            FROM member
+            """, memberRowMapper);
     }
 
     private static final RowMapper<Member> memberRowMapper = (rs, rowNum) -> new Member(
