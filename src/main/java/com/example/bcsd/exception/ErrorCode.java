@@ -1,7 +1,5 @@
 package com.example.bcsd.exception;
 
-import org.springframework.http.HttpStatus;
-
 public enum ErrorCode {
     CANNOT_FIND_ARTICLE(404, "해당 게시글을 찾을 수 없습니다."),
     CANNOT_FIND_BOARD(404, "해당 게시판을 찾을 수 없습니다."),
