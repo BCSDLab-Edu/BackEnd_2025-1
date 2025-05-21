@@ -36,7 +36,6 @@ public class BoardService {
         return boardRepository.save(board);
     }
 
-
     @Transactional
     public void deleteBoard(Long id) {
         if (!boardRepository.deleteById(id)) {

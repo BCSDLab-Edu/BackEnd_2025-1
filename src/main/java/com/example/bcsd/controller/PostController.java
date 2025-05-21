@@ -29,12 +29,12 @@ public class PostController {
 
     @GetMapping(value = "/posts", params = "boardId")
     public String getPostViewByBoardId(@RequestParam Long boardId, Model model) {
-        String boardName = boardService.getBoardNameById(boardId); // boardId로 이름 가져오는 메소드
+        String boardName = boardService.getBoardNameById(boardId);
         List<ArticleResponseDto> articles = articleService.getArticlesByBoardId(boardId);
 
         model.addAttribute("boardName", boardName);
         model.addAttribute("articles", articles);
 
-        return "postViewByBoard"; // 위에 작성한 HTML 파일 이름
+        return "postViewByBoard";
     }
 }

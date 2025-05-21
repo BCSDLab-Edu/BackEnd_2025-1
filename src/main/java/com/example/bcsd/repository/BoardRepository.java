@@ -29,6 +29,8 @@ public class BoardRepository {
         return result.stream().findFirst();
     }
 
+
+
     public Optional<String> findNameById(Long id) {
         String sql = "SELECT name FROM board WHERE id = ?";
         List<String> results = jdbcTemplate.query(sql, new Object[]{id},
