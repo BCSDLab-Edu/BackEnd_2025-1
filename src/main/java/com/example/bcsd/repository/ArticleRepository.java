@@ -50,6 +50,11 @@ public class ArticleRepository {
         return Boolean.TRUE.equals(jdbcTemplate.queryForObject(sql, Boolean.class, id));
     }
 
+    public boolean existsByBoardId(Long id) {
+        String sql = "SELECT EXISTS (SELECT 1 FROM article WHERE board_id = ?)";
+        return Boolean.TRUE.equals(jdbcTemplate.queryForObject(sql, Boolean.class, id));
+    }
+
     public Article save(Article article) {
         String sql = "INSERT INTO article (id, writer_id, board_id, title, content, created_date, modified_date) VALUES (?, ?, ?, ?, ?, ?, ?)";
         jdbcTemplate.update(sql,
