@@ -4,6 +4,7 @@ import com.example.bcsd.domain.Member;
 import com.example.bcsd.dto.MemberRequestDto;
 import com.example.bcsd.dto.MemberResponseDto;
 import com.example.bcsd.dto.MemberUpdateRequestDto;
+import com.example.bcsd.exception.EmailAlreadyExistsException;
 import com.example.bcsd.exception.ErrorCode;
 import com.example.bcsd.exception.MemberNotFoundException;
 import com.example.bcsd.repository.MemberRepository;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MemberService {
@@ -41,6 +43,12 @@ public class MemberService {
     public MemberResponseDto updateMember(MemberUpdateRequestDto dto, Long id) {
         Member member = memberRepository.findById(id)
                 .orElseThrow(() -> new MemberNotFoundException(ErrorCode.CANNOT_FIND_MEMBER));
+
+        Optional<Member> memberEmailCheck = memberRepository.findByEmail(dto.getEmail());
+
+        if (memberEmailCheck.isPresent() && !memberEmailCheck.get().getId().equals(id)) {
+            throw new EmailAlreadyExistsException(ErrorCode.EMAIL_ALREADY_EXISTS);
+        }
 
         member.setEmail(dto.getEmail());
         member.setName(dto.getName());

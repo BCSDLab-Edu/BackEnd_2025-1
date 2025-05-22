@@ -36,6 +36,11 @@ public class MemberRepository {
         return result.stream().findFirst();
     }
 
+    public Optional<Member> findByEmail(String email) {
+        List<Member> result = jdbcTemplate.query("SELECT * FROM member WHERE id = ?", memberRowMapper, email);
+        return result.stream().findFirst();
+    }
+
     public Member save(Member member) {
         jdbcTemplate.update("INSERT INTO member (id, name, email, password) VALUES (?, ?, ?, ?)",
                 member.getId(), member.getName(), member.getEmail(), member.getPassword());
