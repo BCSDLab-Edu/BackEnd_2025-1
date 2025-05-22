@@ -2,6 +2,9 @@ package com.example.bcsd.service;
 
 import com.example.bcsd.domain.Board;
 import com.example.bcsd.dto.BoardRequestDto;
+import com.example.bcsd.exception.BoardDeletionNotAllowedException;
+import com.example.bcsd.exception.BoardNotFoundException;
+import com.example.bcsd.exception.ErrorCode;
 import com.example.bcsd.repository.BoardRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,12 +25,12 @@ public class BoardService {
 
     public Board getBoardById(Long id) {
         return boardRepository.findById(id)
-                .orElseThrow(() -> new NullPointerException(""));
+                .orElseThrow(() -> new BoardNotFoundException(ErrorCode.CANNOT_FIND_BOARD));
     }
 
     public String getBoardNameById(Long id) {
         return boardRepository.findNameById(id)
-                .orElseThrow(() -> new IllegalArgumentException("해당 게시판이 존재하지 않습니다."));
+                .orElseThrow(() -> new BoardNotFoundException(ErrorCode.CANNOT_FIND_BOARD));
     }
 
     @Transactional
