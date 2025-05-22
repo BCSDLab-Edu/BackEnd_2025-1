@@ -44,10 +44,10 @@ public class BoardService {
     @Transactional
     public void deleteBoard(Long id) {
         Board board = boardRepository.findById(id)
-                .orElseThrow(() -> new MemberNotFoundException(ErrorCode.CANNOT_FIND_BOARD));
+                .orElseThrow(() -> new BoardNotFoundException(ErrorCode.CANNOT_FIND_BOARD));
 
         if (articleRepository.existsByWriterId(id)) {
-            throw new MemberDeletionNotAllowedException(ErrorCode.MEMBER_HAS_ARTICLES);
+            throw new BoardDeletionNotAllowedException(ErrorCode.MEMBER_HAS_ARTICLES);
         }
     }
 }
