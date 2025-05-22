@@ -32,6 +32,11 @@ public class MemberService {
     }
 
     @Transactional
+    public Member updateMember(MemberRequestDto dto) {
+        Member member = memberRepository.findById(dto.getId());
+    }
+
+    @Transactional
     public void deleteMember(Long id) {
         if (!memberRepository.deleteById(id)) {
             throw new NullPointerException("");

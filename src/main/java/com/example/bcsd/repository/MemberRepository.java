@@ -1,10 +1,12 @@
 package com.example.bcsd.repository;
 
+import com.example.bcsd.domain.Article;
 import com.example.bcsd.domain.Member;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -38,6 +40,15 @@ public class MemberRepository {
         jdbcTemplate.update("INSERT INTO member (id, name, email, password) VALUES (?, ?, ?, ?)",
                 member.getId(), member.getName(), member.getEmail(), member.getPassword());
         return member;
+    }
+
+    public void update(Member member) {
+        String sql = "UPDATE member SET name = ?, email = ?, password = ? WHERE id = ?";
+        jdbcTemplate.update(sql,
+                member.getName(),
+                member.getEmail(),
+                member.getPassword()
+        );
     }
 
     public boolean deleteById(Long id) {
