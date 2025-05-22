@@ -2,6 +2,8 @@ package com.example.bcsd.controller;
 
 import com.example.bcsd.domain.Member;
 import com.example.bcsd.dto.MemberRequestDto;
+import com.example.bcsd.dto.MemberResponseDto;
+import com.example.bcsd.dto.MemberUpdateRequestDto;
 import com.example.bcsd.service.MemberService;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,13 +24,18 @@ public class MemberController {
     }
 
     @GetMapping("/{id}")
-    public Member getMemberById(@PathVariable Long id) {
+    public MemberResponseDto getMemberById(@PathVariable Long id) {
         return memberService.getMemberById(id);
     }
 
     @PostMapping
-    public Member createMember(@RequestBody MemberRequestDto dto) {
+    public MemberResponseDto createMember(@RequestBody MemberRequestDto dto) {
         return memberService.createMember(dto);
+    }
+
+    @PutMapping("/{id}")
+    public MemberResponseDto updateMember(@PathVariable Long id, @RequestBody MemberUpdateRequestDto dto) {
+        return memberService.updateMember(dto, id);
     }
 
     @DeleteMapping("/{id}")

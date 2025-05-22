@@ -2,6 +2,10 @@ package com.example.bcsd.service;
 
 import com.example.bcsd.domain.Member;
 import com.example.bcsd.dto.MemberRequestDto;
+import com.example.bcsd.dto.MemberResponseDto;
+import com.example.bcsd.dto.MemberUpdateRequestDto;
+import com.example.bcsd.exception.ErrorCode;
+import com.example.bcsd.exception.MemberNotFoundException;
 import com.example.bcsd.repository.MemberRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,20 +24,31 @@ public class MemberService {
         return memberRepository.findAll();
     }
 
-    public Member getMemberById(Long id) {
-        return memberRepository.findById(id)
+    public MemberResponseDto getMemberById(Long id) {
+        return memberRepository.findById(id).map(MemberResponseDto::new)
                 .orElseThrow(() -> new NullPointerException(""));
     }
 
     @Transactional
-    public Member createMember(MemberRequestDto dto) {
+    public MemberResponseDto createMember(MemberRequestDto dto) {
         Member member = new Member(dto.getId(), dto.getName(), dto.getEmail(), dto.getPassword());
-        return memberRepository.save(member);
+        memberRepository.save(member);
+
+        return new MemberResponseDto(member);
     }
 
     @Transactional
-    public Member updateMember(MemberRequestDto dto) {
-        Member member = memberRepository.findById(dto.getId());
+    public MemberResponseDto updateMember(MemberUpdateRequestDto dto, Long id) {
+        Member member = memberRepository.findById(id)
+                .orElseThrow(() -> new MemberNotFoundException(ErrorCode.CANNOT_FIND_MEMBER));
+
+        member.setEmail(dto.getEmail());
+        member.setName(dto.getName());
+        member.setPassword(dto.getPassword());
+
+        memberRepository.update(member);
+
+        return new MemberResponseDto(member);
     }
 
     @Transactional
