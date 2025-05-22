@@ -5,6 +5,7 @@ import com.example.bcsd.domain.Board;
 import com.example.bcsd.dto.ArticleListResponseDto;
 import com.example.bcsd.dto.ArticleRequestDto;
 import com.example.bcsd.dto.ArticleResponseDto;
+import com.example.bcsd.exception.*;
 import com.example.bcsd.repository.ArticleRepository;
 import com.example.bcsd.repository.BoardRepository;
 import com.example.bcsd.repository.MemberRepository;
@@ -49,7 +50,7 @@ public class ArticleService {
     public ArticleResponseDto getArticleById(Long id) {
         return articleRepository.findById(id)
                 .map(ArticleResponseDto::new)
-                .orElseThrow(() -> new NullPointerException(""));
+                .orElseThrow(() -> new ArticleNotFoundException(ErrorCode.CANNOT_FIND_ARTICLE));
     }
 
     public List<ArticleResponseDto> getArticlesByBoardId(Long boardId) {
@@ -62,10 +63,10 @@ public class ArticleService {
     @Transactional
     public ArticleResponseDto createArticle(ArticleRequestDto dto) {
         if (!memberRepository.findById(dto.getWriterId()).isPresent()) {
-            throw new IllegalArgumentException("해당 작성자를 찾을 수 없습니다.");
+            throw new MemberNotFoundException(ErrorCode.CANNOT_FIND_MEMBER);
         }
         if (!boardRepository.findById(dto.getBoardId()).isPresent()) {
-            throw new IllegalArgumentException("해당 게시판을 찾을 수 없습니다.");
+            throw new BoardNotFoundException(ErrorCode.CANNOT_FIND_BOARD);
         }
 
         Article article = new Article(
@@ -85,11 +86,23 @@ public class ArticleService {
     @Transactional
     public ArticleResponseDto updateArticle(Long id, ArticleRequestDto dto) {
         Article article = articleRepository.findById(id)
-                .orElseThrow(() -> new NullPointerException(""));
+                .orElseThrow(() -> new ArticleNotFoundException(ErrorCode.CANNOT_FIND_ARTICLE));
+
+        boolean writerExists = memberRepository.findById(dto.getWriterId()).isPresent();
+        if (!writerExists) {
+            throw new ArticleReferenceInvalidException(ErrorCode.MEMBER_DOESNT_EXISTS);
+        }
+
+        boolean boardExists = boardRepository.findById(dto.getBoardId()).isPresent();
+        if (!boardExists) {
+            throw new ArticleReferenceInvalidException(ErrorCode.BOARD_DOESNT_EXISTS);
+        }
 
         article.setTitle(dto.getTitle());
         article.setContent(dto.getContent());
         article.setModifiedDate(LocalDateTime.now());
+        article.setWriterId(dto.getWriterId());
+        article.setBoardId(dto.getBoardId());
 
         articleRepository.update(article);
 

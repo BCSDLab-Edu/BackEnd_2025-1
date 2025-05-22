@@ -16,7 +16,7 @@ public class ExceptionControllerAdvice {
     public ResponseEntity<RsData<Object>> handleCustomException(CustomException e) {
         ErrorCode errorCode = e.getErrorCode();
 
-        log.error("Handled CustomException - code: {}, message: {}", errorCode.getCode(), errorCode.getMessage());
+        log.error("에러 코드 : {}\n내용 : {}", errorCode.getCode(), errorCode.getMessage());
 
         return ResponseEntity
                 .status(errorCode.getCode())
