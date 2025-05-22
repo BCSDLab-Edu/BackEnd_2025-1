@@ -1,10 +1,10 @@
 package com.example.bcsd.dto;
 
-public class RsData {
+public class ErrorResponse {
     private final int code;
     private final String message;
 
-    public RsData(int code, String message) {
+    public ErrorResponse(int code, String message) {
         this.code = code;
         this.message = message;
     }
@@ -16,9 +16,4 @@ public class RsData {
     public String getMessage() {
         return message;
     }
-
-    public static RsData of(int code, String message) {
-        return new RsData(code, message);
-    }
 }
-
