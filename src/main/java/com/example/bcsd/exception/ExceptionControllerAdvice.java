@@ -4,6 +4,7 @@ import com.example.bcsd.dto.RsData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -21,5 +22,13 @@ public class ExceptionControllerAdvice {
         return ResponseEntity
                 .status(errorCode.getCode())
                 .body(RsData.error(errorCode.getMessage()));
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<RsData<Object>> handleValidationException(MethodArgumentNotValidException e) {
+        String message = e.getBindingResult().getFieldError().getDefaultMessage();
+        return ResponseEntity
+                .badRequest()
+                .body(RsData.error(message));
     }
 }

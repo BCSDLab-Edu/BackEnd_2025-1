@@ -90,12 +90,12 @@ public class ArticleService {
 
         boolean writerExists = memberRepository.findById(dto.getWriterId()).isPresent();
         if (!writerExists) {
-            throw new ArticleReferenceInvalidException(ErrorCode.MEMBER_DOESNT_EXISTS);
+            throw new InvalidArticleReferenceException(ErrorCode.MEMBER_DOESNT_EXISTS);
         }
 
         boolean boardExists = boardRepository.findById(dto.getBoardId()).isPresent();
         if (!boardExists) {
-            throw new ArticleReferenceInvalidException(ErrorCode.BOARD_DOESNT_EXISTS);
+            throw new InvalidArticleReferenceException(ErrorCode.BOARD_DOESNT_EXISTS);
         }
 
         article.setTitle(dto.getTitle());

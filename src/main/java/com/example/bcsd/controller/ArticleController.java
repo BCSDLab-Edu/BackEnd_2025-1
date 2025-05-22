@@ -4,6 +4,7 @@ import com.example.bcsd.dto.ArticleListResponseDto;
 import com.example.bcsd.dto.ArticleRequestDto;
 import com.example.bcsd.dto.ArticleResponseDto;
 import com.example.bcsd.service.ArticleService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,7 +34,7 @@ public class ArticleController {
     }
 
     @PostMapping
-    public ArticleResponseDto createArticle(@RequestBody ArticleRequestDto dto) {
+    public ArticleResponseDto createArticle(@RequestBody @Valid ArticleRequestDto dto) {
         return articleService.createArticle(dto);
     }
 
