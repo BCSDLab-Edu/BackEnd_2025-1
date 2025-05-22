@@ -37,7 +37,7 @@ public class MemberRepository {
     }
 
     public Optional<Member> findByEmail(String email) {
-        List<Member> result = jdbcTemplate.query("SELECT * FROM member WHERE id = ?", memberRowMapper, email);
+        List<Member> result = jdbcTemplate.query("SELECT * FROM member WHERE email = ?", memberRowMapper, email);
         return result.stream().findFirst();
     }
 
@@ -47,12 +47,13 @@ public class MemberRepository {
         return member;
     }
 
-    public void update(Member member) {
+    public void update(Member member, Long id) {
         String sql = "UPDATE member SET name = ?, email = ?, password = ? WHERE id = ?";
         jdbcTemplate.update(sql,
                 member.getName(),
                 member.getEmail(),
-                member.getPassword()
+                member.getPassword(),
+                id
         );
     }
 

@@ -1,10 +1,22 @@
 package com.example.bcsd.dto;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 public class ArticleRequestDto {
-    private Long id;
+
+    Long id;
+
+    @NotNull(message = "작성자 ID가 누락됐습니다.")
     private Long writerId;
+
+    @NotNull(message = "게시판 ID가 누락됐습니다.")
     private Long boardId;
+
+    @NotBlank(message = "제목이 비어있습니다.")
     private String title;
+
+    @NotBlank(message = "내용이 비어있습니다.")
     private String content;
 
     public Long getId() {

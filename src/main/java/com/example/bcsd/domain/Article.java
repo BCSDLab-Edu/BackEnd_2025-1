@@ -6,17 +6,9 @@ import java.time.LocalDateTime;
 
 public class Article {
     Long id;
-
-    @NotNull(message = "writerId가 누락됨")
     Long writerId;
-
-    @NotNull(message = "boardId가 누락됨")
     Long boardId;
-
-    @NotNull(message = "title이 누락됨")
     String title;
-
-    @NotNull(message = "content가 누락됨")
     String content;
     LocalDateTime createdDate;
     LocalDateTime modifiedDate;

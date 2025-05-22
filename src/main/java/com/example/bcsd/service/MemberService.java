@@ -32,7 +32,7 @@ public class MemberService {
 
     public MemberResponseDto getMemberById(Long id) {
         return memberRepository.findById(id).map(MemberResponseDto::new)
-                .orElseThrow(() -> new NullPointerException(""));
+                .orElseThrow(() -> new MemberNotFoundException(ErrorCode.CANNOT_FIND_MEMBER));
     }
 
     @Transactional
@@ -58,7 +58,7 @@ public class MemberService {
         member.setName(dto.getName());
         member.setPassword(dto.getPassword());
 
-        memberRepository.update(member);
+        memberRepository.update(member, id);
 
         return new MemberResponseDto(member);
     }
