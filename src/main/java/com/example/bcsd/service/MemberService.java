@@ -6,7 +6,9 @@ import com.example.bcsd.dto.MemberResponseDto;
 import com.example.bcsd.dto.MemberUpdateRequestDto;
 import com.example.bcsd.exception.EmailAlreadyExistsException;
 import com.example.bcsd.exception.ErrorCode;
+import com.example.bcsd.exception.MemberDeletionNotAllowedException;
 import com.example.bcsd.exception.MemberNotFoundException;
+import com.example.bcsd.repository.ArticleRepository;
 import com.example.bcsd.repository.MemberRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,9 +19,11 @@ import java.util.Optional;
 @Service
 public class MemberService {
     private final MemberRepository memberRepository;
+    private final ArticleRepository articleRepository;
 
-    public MemberService(MemberRepository memberRepository) {
+    public MemberService(MemberRepository memberRepository, ArticleRepository articleRepository) {
         this.memberRepository = memberRepository;
+        this.articleRepository = articleRepository;
     }
 
     public List<Member> getAllMembers() {
@@ -61,8 +65,11 @@ public class MemberService {
 
     @Transactional
     public void deleteMember(Long id) {
-        if (!memberRepository.deleteById(id)) {
-            throw new NullPointerException("");
+        Member member = memberRepository.findById(id)
+                .orElseThrow(() -> new MemberNotFoundException(ErrorCode.CANNOT_FIND_MEMBER));
+
+        if (articleRepository.existsByWriterId(id)) {
+            throw new MemberDeletionNotAllowedException(ErrorCode.MEMBER_HAS_ARTICLES);
         }
     }
 }
