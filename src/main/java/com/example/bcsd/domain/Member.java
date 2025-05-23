@@ -1,9 +1,8 @@
 package com.example.bcsd.domain;
 
-public record Member(
-        Long id,
-        String name,
-        String email,
-        String password
-) {
+public class Member {
+    private Long id;
+    private String name;
+    private String email;
+    private String password;
 }
