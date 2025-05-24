@@ -3,7 +3,6 @@ package com.example.bcsd.article.repository;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -13,8 +12,11 @@ import com.example.bcsd.article.model.Article;
 
 @Repository
 public class ArticleRepository {
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
+    private final JdbcTemplate jdbcTemplate;
+
+    public ArticleRepository(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
 
     public Article save(Article article) {
         String sql = "INSERT INTO article (author_id, board_id, title, content) VALUES (?, ?, ?, ?)";

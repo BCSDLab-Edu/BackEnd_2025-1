@@ -6,7 +6,6 @@ import com.example.bcsd.member.util.MemberUtil;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -14,8 +13,11 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class MemberRepository {
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
+    private final JdbcTemplate jdbcTemplate;
+
+    public MemberRepository(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
 
     public Member save(Member member) {
         String sql = "INSERT INTO member (name, email, password) VALUES (?, ?, ?)";
