@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,23 +47,23 @@ public class ArticleDao {
                 """;
 
         jdbcTemplate.update(sql,
-                article.authorId(),
-                article.boardId(),
-                article.title(),
-                article.content(),
-                Timestamp.valueOf(article.createdDate()),
-                Timestamp.valueOf(article.modifiedDate())
+                article.getAuthorId(),
+                article.getBoardId(),
+                article.getTitle(),
+                article.getContent(),
+                Timestamp.valueOf(article.getCreatedDate()),
+                Timestamp.valueOf(article.getModifiedDate())
         );
 
         Long id = jdbcTemplate.queryForObject("SELECT LAST_INSERT_ID()", Long.class);
         return new Article(
                 id,
-                article.authorId(),
-                article.boardId(),
-                article.title(),
-                article.content(),
-                article.createdDate(),
-                article.modifiedDate()
+                article.getAuthorId(),
+                article.getBoardId(),
+                article.getTitle(),
+                article.getContent(),
+                article.getCreatedDate(),
+                article.getModifiedDate()
         );
     }
 
@@ -73,10 +74,10 @@ public class ArticleDao {
                 WHERE id = ?
                 """;
         jdbcTemplate.update(sql,
-                updated.title(),
-                updated.content(),
-                updated.boardId(),
-                Timestamp.valueOf(updated.modifiedDate()),
+                updated.getTitle(),
+                updated.getContent(),
+                updated.getBoardId(),
+                Timestamp.valueOf(updated.getModifiedDate()),
                 id
         );
     }
