@@ -54,8 +54,8 @@ public class ArticleService {
 
     private ArticleResponseDto toDto(Article a) {
         return new ArticleResponseDto(
-                a.id(), a.authorId(), a.boardId(), a.title(), a.content(),
-                a.createdDate(), a.modifiedDate()
+                a.getId(), a.getAuthorId(), a.getBoardId(), a.getTitle(), a.getContent(),
+                a.getCreatedDate(), a.getModifiedDate()
         );
     }
 }

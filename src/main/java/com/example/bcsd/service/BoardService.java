@@ -18,11 +18,11 @@ public class BoardService {
     public BoardResponseDto findById(Long id) {
         Board board = boardDao.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("게시판이 없습니다."));
-        return new BoardResponseDto(board.id(), board.name());
+        return new BoardResponseDto(board.getId(), board.getName());
     }
 
     public BoardResponseDto create(BoardDto dto) {
         Board saved = boardDao.save(new Board(null, dto.name()));
-        return new BoardResponseDto(saved.id(), saved.name());
+        return new BoardResponseDto(saved.getId(), saved.getName());
     }
 }

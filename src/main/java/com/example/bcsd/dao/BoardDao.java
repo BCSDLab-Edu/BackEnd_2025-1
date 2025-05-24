@@ -25,8 +25,8 @@ public class BoardDao {
     }
 
     public Board save(Board board) {
-        jdbcTemplate.update("INSERT INTO board (name) VALUES (?)", board.name());
+        jdbcTemplate.update("INSERT INTO board (name) VALUES (?)", board.getName());
         Long id = jdbcTemplate.queryForObject("SELECT LAST_INSERT_ID()", Long.class);
-        return new Board(id, board.name());
+        return new Board(id, board.getName());
     }
 }
