@@ -5,6 +5,7 @@ import com.example.bcsd.dto.MemberRequestDto;
 import com.example.bcsd.dto.MemberResponseDto;
 import com.example.bcsd.dto.MemberUpdateRequestDto;
 import com.example.bcsd.service.MemberService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,7 +30,7 @@ public class MemberController {
     }
 
     @PostMapping
-    public MemberResponseDto createMember(@RequestBody MemberRequestDto dto) {
+    public MemberResponseDto createMember(@RequestBody @Valid MemberRequestDto dto) {
         return memberService.createMember(dto);
     }
 

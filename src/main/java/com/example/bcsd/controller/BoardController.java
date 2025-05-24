@@ -4,6 +4,7 @@ import com.example.bcsd.domain.Board;
 import com.example.bcsd.dto.BoardRequestDto;
 import com.example.bcsd.dto.BoardResponseDto;
 import com.example.bcsd.service.BoardService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,7 +29,7 @@ public class BoardController {
     }
 
     @PostMapping
-    public BoardResponseDto createBoard(@RequestBody BoardRequestDto dto) {
+    public BoardResponseDto createBoard(@RequestBody @Valid BoardRequestDto dto) {
         return boardService.createBoard(dto);
     }
 
