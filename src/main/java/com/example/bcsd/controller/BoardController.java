@@ -2,6 +2,7 @@ package com.example.bcsd.controller;
 
 import com.example.bcsd.domain.Board;
 import com.example.bcsd.dto.BoardRequestDto;
+import com.example.bcsd.dto.BoardResponseDto;
 import com.example.bcsd.service.BoardService;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,17 +18,17 @@ public class BoardController {
     }
 
     @GetMapping
-    public List<Board> getAllBoards() {
+    public List<BoardResponseDto> getAllBoards() {
         return boardService.getAllBoards();
     }
 
     @GetMapping("/{id}")
-    public Board getBoardById(@PathVariable Long id) {
+    public BoardResponseDto getBoardById(@PathVariable Long id) {
         return boardService.getBoardById(id);
     }
 
     @PostMapping
-    public Board createBoard(@RequestBody BoardRequestDto dto) {
+    public BoardResponseDto createBoard(@RequestBody BoardRequestDto dto) {
         return boardService.createBoard(dto);
     }
 

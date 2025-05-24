@@ -1,8 +1,8 @@
 package com.example.bcsd.service;
 
 import com.example.bcsd.domain.Board;
-import com.example.bcsd.domain.Member;
 import com.example.bcsd.dto.BoardRequestDto;
+import com.example.bcsd.dto.BoardResponseDto;
 import com.example.bcsd.exception.*;
 import com.example.bcsd.repository.ArticleRepository;
 import com.example.bcsd.repository.BoardRepository;
@@ -21,12 +21,17 @@ public class BoardService {
         this.articleRepository = articleRepository;
     }
 
-    public List<Board> getAllBoards() {
-        return boardRepository.findAll();
+    public List<BoardResponseDto> getAllBoards() {
+        List<Board> boards = boardRepository.findAll();
+        return boards.stream()
+                .map(BoardResponseDto::new)
+                .toList();
     }
 
-    public Board getBoardById(Long id) {
+
+    public BoardResponseDto getBoardById(Long id) {
         return boardRepository.findById(id)
+                .map(BoardResponseDto::new)
                 .orElseThrow(() -> new BoardNotFoundException(ErrorCode.CANNOT_FIND_BOARD));
     }
 
@@ -36,9 +41,10 @@ public class BoardService {
     }
 
     @Transactional
-    public Board createBoard(BoardRequestDto dto) {
+    public BoardResponseDto createBoard(BoardRequestDto dto) {
         Board board = new Board(dto.getId(), dto.getName());
-        return boardRepository.save(board);
+        boardRepository.save(board);
+        return new BoardResponseDto(board);
     }
 
     @Transactional
@@ -47,7 +53,7 @@ public class BoardService {
                 .orElseThrow(() -> new BoardNotFoundException(ErrorCode.CANNOT_FIND_BOARD));
 
         if (articleRepository.existsByWriterId(id)) {
-            throw new BoardDeletionNotAllowedException(ErrorCode.MEMBER_HAS_ARTICLES);
+            throw new BoardDeletionNotAllowedException(ErrorCode.BOARD_HAS_ARTICLES);
         }
     }
 }
