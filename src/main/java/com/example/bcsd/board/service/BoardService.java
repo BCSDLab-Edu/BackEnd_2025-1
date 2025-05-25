@@ -58,4 +58,9 @@ public class BoardService {
 
         return UpdateBoardResponse.from(board);
     }
+
+    @Transactional
+    public void DeleteBoard(Long id) {
+        boardRepository.delete(id);
+    }
 }
