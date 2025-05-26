@@ -29,4 +29,14 @@ public class BoardDao {
         Long id = jdbcTemplate.queryForObject("SELECT LAST_INSERT_ID()", Long.class);
         return new Board(id, board.getName());
     }
+
+    public void delete(Long id) {
+        jdbcTemplate.update("DELETE FROM board WHERE id = ?", id);
+    }
+
+    public boolean existArticleOnBoard(Long boardId) {
+        String sql = "SELECT COUNT(*) FROM article WHERE boardId = ?";
+        Integer count = jdbcTemplate.queryForObject(sql, Integer.class, boardId);
+        return count != null && count > 0;
+    }
 }
