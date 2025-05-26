@@ -3,10 +3,8 @@ package com.example.bcsd.board.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.server.ResponseStatusException;
 
 import com.example.bcsd.board.model.Board;
 import com.example.bcsd.article.dto.GetArticlesResponse;
@@ -46,7 +44,7 @@ public class BoardService {
     }
 
     public Board GetBoard(Long id) {
-        return boardRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Board not found"));
+        return boardRepository.findById(id);
     }
 
     @Transactional

@@ -59,7 +59,7 @@ public class ArticleController {
             @PathVariable("id") Long id,
             @RequestBody UpdateArticleRequest request
     ) {
-        UpdateArticleResponse res = articleService.updateArticle(id, request);
+        UpdateArticleResponse res = articleService.UpdateArticle(id, request);
 
         return ResponseEntity.ok(res);
     }

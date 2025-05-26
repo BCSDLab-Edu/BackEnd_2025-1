@@ -1,9 +1,7 @@
 package com.example.bcsd.article.repository;
 
 import java.util.List;
-import java.util.Optional;
 
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -25,15 +23,11 @@ public class ArticleRepository {
         return article;
     }
 
-    public Optional<Article> findById(Long id) {
+    public Article findById(Long id) {
         String sql = "SELECT * FROM article WHERE id = ?";
-        try {
-            Article article = jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Article.class), id);
+        Article article = jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Article.class), id);
 
-            return Optional.ofNullable(article);
-        } catch(EmptyResultDataAccessException e) {
-            return Optional.empty();
-        }
+        return article;
     }
 
     public List<Article> findAll() {

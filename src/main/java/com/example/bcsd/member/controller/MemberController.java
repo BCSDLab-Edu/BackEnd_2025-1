@@ -43,7 +43,7 @@ public class MemberController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UpdateMemberResponse> UpdateArticle(
+    public ResponseEntity<UpdateMemberResponse> UpdateMember(
             @PathVariable("id") Long id,
             @RequestBody UpdateMemberRequest request
     ) {

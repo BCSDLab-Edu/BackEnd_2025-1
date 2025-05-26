@@ -1,9 +1,7 @@
 package com.example.bcsd.member.service;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.server.ResponseStatusException;
 
 import com.example.bcsd.member.model.Member;
 import com.example.bcsd.member.dto.RegisterRequest;
@@ -25,13 +23,21 @@ public class MemberService {
     }
 
     public Member GetMember(Long id) {
-        return memberRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Member not found"));
+        return memberRepository.findById(id);
     }
 
     @Transactional
     public UpdateMemberResponse UpdateMember(Long id, UpdateMemberRequest request) {
         Member member = GetMember(id);
-        member.setName(request.name());
+        if (request.name() != null) {
+            member.setName(request.name());
+        }
+
+        if (request.email() != null) {
+            member.setEmail(request.email());
+        } else {
+            member.setEmail(null);
+        }
 
         memberRepository.updateSave(member);
 

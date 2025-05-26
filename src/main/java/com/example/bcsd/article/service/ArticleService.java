@@ -7,10 +7,8 @@ import java.util.stream.Collectors;
 import java.util.HashMap;
 
 import com.example.bcsd.article.dto.UpdateArticleRequest;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.server.ResponseStatusException;
 
 import com.example.bcsd.article.model.Article;
 import com.example.bcsd.article.dto.CreateArticleRequest;
@@ -18,6 +16,7 @@ import com.example.bcsd.article.dto.GetArticleResponse;
 import com.example.bcsd.article.dto.GetArticlesResponse;
 import com.example.bcsd.article.dto.UpdateArticleResponse;
 import com.example.bcsd.article.repository.ArticleRepository;
+import com.example.bcsd.member.model.Member;
 import com.example.bcsd.member.repository.MemberRepository;
 
 @Service
@@ -42,7 +41,8 @@ public class ArticleService {
 
         Map<Long, String> authorNames = new HashMap<>();
         for (Long id : authorIds) {
-            memberRepository.findById(id).ifPresent(member -> authorNames.put(id, member.getName()));
+            Member member = memberRepository.findById(id);
+            authorNames.put(id, member.getName());
         }
 
         List<GetArticleResponse> getArticleResponses = articles.stream().map(article -> {
@@ -59,7 +59,27 @@ public class ArticleService {
 
         Map<Long, String> authorNames = new HashMap<>();
         for (Long id : authorIds) {
-            memberRepository.findById(id).ifPresent(member -> authorNames.put(id, member.getName()));
+            Member member = memberRepository.findById(id);
+            authorNames.put(id, member.getName());
+        }
+
+        List<GetArticleResponse> getArticleResponses = articles.stream().map(article -> {
+            String authorName = authorNames.getOrDefault(article.getAuthorId(), "Unknown Author");
+            return GetArticleResponse.from(article, authorName);
+        }).toList();
+
+        return new GetArticlesResponse(getArticleResponses, articles.size());
+    }
+
+    public GetArticlesResponse GetArticlesByMemberId(Long memberId) {
+        List<Article> articles = articleRepository.findAll().stream().filter(article -> article.getAuthorId().equals(memberId)).collect(Collectors.toList());
+        List<Long> authorIds = articles.stream().map(Article::getAuthorId).distinct().toList();
+
+        Member member = memberRepository.findById(memberId);
+
+        Map<Long, String> authorNames = new HashMap<>();
+        for (Long id : authorIds) {
+            authorNames.put(id, member.getName());
         }
 
         List<GetArticleResponse> getArticleResponses = articles.stream().map(article -> {
@@ -71,15 +91,15 @@ public class ArticleService {
     }
 
     public GetArticleResponse GetArticle(Long id) {
-        Article article = articleRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Article not found"));
-        String author = memberRepository.findById(article.getAuthorId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Author not found")).getName();
+        Article article = articleRepository.findById(id);
+        String author = memberRepository.findById(article.getAuthorId()).getName();
 
         return GetArticleResponse.from(article, author);
     }
 
     @Transactional
-    public UpdateArticleResponse updateArticle(Long id, UpdateArticleRequest request) {
-        Article article = articleRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Article not found"));
+    public UpdateArticleResponse UpdateArticle(Long id, UpdateArticleRequest request) {
+        Article article = articleRepository.findById(id);
         String title = request.title();
         Long boardId = request.boardId();
         String content = request.content();

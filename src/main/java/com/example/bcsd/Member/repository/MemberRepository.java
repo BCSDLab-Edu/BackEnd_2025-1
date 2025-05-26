@@ -27,15 +27,29 @@ public class MemberRepository {
         return member;
     }
 
-    public Optional<Member> findById(Long id) {
+    public Member findById(Long id) {
         String sql = "SELECT * FROM member WHERE id = ?";
-        try {
-            Member member = jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Member.class), id);
+        Member member = jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Member.class), id);
 
+        return member;
+    }
+
+    public Optional<Member> findByEmail(String email) {
+        String sql = "SELECT * FROM member WHERE email = ?";
+        try {
+            Member member = jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Member.class), email);
+            
             return Optional.ofNullable(member);
         } catch(EmptyResultDataAccessException e) {
             return Optional.empty();
         }
+    }
+
+    public boolean memberExists(Long id) {
+        String sql = "SELECT COUNT(*) FROM member WHERE id = ?";
+        Integer count = jdbcTemplate.queryForObject(sql, Integer.class, id);
+
+        return count != null && count > 0;
     }
 
     public List<Member> findAll() {
@@ -44,8 +58,13 @@ public class MemberRepository {
     }
 
     public Member updateSave(Member member) {
-        String sql = "UPDATE member SET name = ?, email = ?, password = ?";
-        jdbcTemplate.update(sql, member.getName(), member.getEmail(), MemberUtil.Pass2Hash(member.getPassword()));
+        if (member.getEmail() == null) {
+            String sql = "UPDATE member SET name = ?, password = ? WHERE id = ?";
+            jdbcTemplate.update(sql, member.getName(), MemberUtil.Pass2Hash(member.getPassword()), member.getId());
+        } else {
+            String sql = "UPDATE member SET name = ?, email = ?, password = ? WHERE id = ?";
+            jdbcTemplate.update(sql, member.getName(), member.getEmail(), MemberUtil.Pass2Hash(member.getPassword()), member.getId());
+        }
 
         return member;
     }

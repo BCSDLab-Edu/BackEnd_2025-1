@@ -17,6 +17,7 @@ public record CreateArticleRequest(
         @NotNull
         Long boardId,
 
+        @NotNull
         @Size(max = 1000, message = "본문은 최대 1000자 까지 입력 가능합니다.")
         String content
 ) {

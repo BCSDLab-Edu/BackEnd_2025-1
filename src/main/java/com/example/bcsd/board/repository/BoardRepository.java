@@ -3,9 +3,7 @@ package com.example.bcsd.board.repository;
 import com.example.bcsd.board.model.Board;
 
 import java.util.List;
-import java.util.Optional;
 
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -25,15 +23,18 @@ public class BoardRepository {
         return board;
     }
 
-    public Optional<Board> findById(Long id) {
+    public Board findById(Long id) {
         String sql = "SELECT * FROM board WHERE id = ?";
-        try {
-            Board board = jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Board.class), id);
+        Board board = jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Board.class), id);
 
-            return Optional.ofNullable(board);
-        } catch(EmptyResultDataAccessException e) {
-            return Optional.empty();
-        }
+        return board;
+    }
+
+    public boolean boardExists(Long id) {
+        String sql = "SELECT COUNT(*) FROM board WHERE id = ?";
+        Integer count = jdbcTemplate.queryForObject(sql, Integer.class, id);
+
+        return count != null && count > 0;
     }
 
     public List<Board> findAll() {
