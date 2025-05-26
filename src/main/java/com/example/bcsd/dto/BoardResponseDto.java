@@ -1,7 +1,7 @@
 package com.example.bcsd.dto;
 
 public record BoardResponseDto(
-        Long id,
+        Long boardId,
         String name
 ) {
 }
