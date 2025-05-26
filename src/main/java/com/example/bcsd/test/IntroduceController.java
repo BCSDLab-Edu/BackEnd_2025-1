@@ -1,8 +1,7 @@
-package com.example.bcsd;
+package com.example.bcsd.test;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestParam;
 
