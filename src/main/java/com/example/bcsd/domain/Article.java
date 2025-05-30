@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 public class Article {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "writer_id", nullable = false)
