@@ -1,5 +1,8 @@
 package com.example.bcsd.repository;
 
+import org.springframework.stereotype.Repository;
+
+@Repository
 public class BoardRepositoryImpl implements BoardRepository {
     /*
     private final JdbcTemplate jdbcTemplate;
