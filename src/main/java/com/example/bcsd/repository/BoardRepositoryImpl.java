@@ -1,45 +1,56 @@
 package com.example.bcsd.repository;
 
+import com.example.bcsd.domain.Board;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class BoardRepositoryImpl implements BoardRepository {
-    /*
-    private final JdbcTemplate jdbcTemplate;
 
-    public BoardRepository(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
+    @PersistenceContext
+    private EntityManager em;
+
+    public BoardRepositoryImpl(EntityManager em) {
+        this.em = em;
     }
 
-    private RowMapper<Board> boardRowMapper = (rs, rowNum) ->
-            new Board(rs.getLong("id"), rs.getString("name"));
-
+    @Override
     public List<Board> findAll() {
-        return jdbcTemplate.query("SELECT * FROM board", boardRowMapper);
+        return em.createQuery("SELECT b FROM Board b", Board.class)
+                .getResultList();
     }
 
+    @Override
     public Optional<Board> findById(Long id) {
-        List<Board> result = jdbcTemplate.query("SELECT * FROM board WHERE id = ?", boardRowMapper, id);
-        return result.stream().findFirst();
+        return Optional.ofNullable(em.find(Board.class, id));
     }
 
-
-
+    @Override
     public Optional<String> findNameById(Long id) {
-        String sql = "SELECT name FROM board WHERE id = ?";
-        List<String> results = jdbcTemplate.query(sql, new Object[]{id},
-                (rs, rowNum) -> rs.getString("name"));
-
+        String jpql = "SELECT b.name FROM Board b WHERE b.id = :id";
+        List<String> results = em.createQuery(jpql, String.class)
+                .setParameter("id", id)
+                .getResultList();
         return results.stream().findFirst();
     }
 
+    @Override
     public Board save(Board board) {
-        jdbcTemplate.update("INSERT INTO board (id, name) VALUES (?, ?)", board.getId(), board.getName());
+        em.persist(board);
         return board;
     }
 
+    @Override
     public boolean deleteById(Long id) {
-        return jdbcTemplate.update("DELETE FROM board WHERE id = ?", id) > 0;
+        Board board = em.find(Board.class, id);
+        if (board != null) {
+            em.remove(board);
+            return true;
+        }
+        return false;
     }
-     */
 }

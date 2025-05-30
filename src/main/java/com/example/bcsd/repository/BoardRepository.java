@@ -9,7 +9,7 @@ import java.util.Optional;
 public interface BoardRepository {
     List<Board> findAll();
     Optional<Board> findById(Long id);
-    Optional<String> fineNameById(Long id);
+    Optional<String> findNameById(Long id);
     Board save(Board board);
     boolean deleteById(Long id);
 }
