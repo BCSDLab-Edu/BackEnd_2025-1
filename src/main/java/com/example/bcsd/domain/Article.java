@@ -29,11 +29,10 @@ public class Article {
     @Column(name = "modified_date", nullable = false)
     private LocalDateTime modifiedDate;
 
-    public Article() {}
+    protected Article() {}
 
-    public Article(Long id, Long writerId, Long boardId, String title, String content,
+    public Article(Long writerId, Long boardId, String title, String content,
                    LocalDateTime createdDate, LocalDateTime modifiedDate) {
-        this.id = id;
         this.writerId = writerId;
         this.boardId = boardId;
         this.title = title;
@@ -44,7 +43,6 @@ public class Article {
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
-
     public Long getWriterId() { return writerId; }
     public void setWriterId(Long writerId) { this.writerId = writerId; }
 

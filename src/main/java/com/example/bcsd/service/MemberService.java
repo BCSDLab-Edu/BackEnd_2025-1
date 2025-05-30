@@ -37,7 +37,7 @@ public class MemberService {
 
     @Transactional
     public MemberResponseDto createMember(MemberRequestDto dto) {
-        Member member = new Member(dto.getId(), dto.getName(), dto.getEmail(), dto.getPassword());
+        Member member = new Member(dto.getName(), dto.getEmail(), dto.getPassword());
         memberRepository.save(member);
 
         return new MemberResponseDto(member);

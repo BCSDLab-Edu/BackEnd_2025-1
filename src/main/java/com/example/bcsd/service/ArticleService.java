@@ -70,7 +70,6 @@ public class ArticleService {
         }
 
         Article article = new Article(
-                dto.getId(),
                 dto.getWriterId(),
                 dto.getBoardId(),
                 dto.getTitle(),

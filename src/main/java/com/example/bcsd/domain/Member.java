@@ -19,10 +19,9 @@ public class Member {
     @Column(nullable = false)
     private String password;
 
-    public Member() {}
+    protected Member() {}
 
-    public Member(Long id, String name, String email, String password) {
-        this.id = id;
+    public Member(String name, String email, String password) {
         this.name = name;
         this.email = email;
         this.password = password;

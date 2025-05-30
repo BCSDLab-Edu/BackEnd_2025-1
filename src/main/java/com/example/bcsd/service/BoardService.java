@@ -42,7 +42,7 @@ public class BoardService {
 
     @Transactional
     public BoardResponseDto createBoard(BoardRequestDto dto) {
-        Board board = new Board(dto.getId(), dto.getName());
+        Board board = new Board(dto.getName());
         boardRepository.save(board);
         return new BoardResponseDto(board);
     }
