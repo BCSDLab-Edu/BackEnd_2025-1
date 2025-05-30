@@ -4,9 +4,6 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 public class ArticleRequestDto {
-
-    Long id;
-
     @NotNull(message = "작성자 ID가 누락됐습니다.")
     private Long writerId;
 
@@ -18,14 +15,6 @@ public class ArticleRequestDto {
 
     @NotBlank(message = "내용이 비어있습니다.")
     private String content;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public Long getWriterId() {
         return writerId;
