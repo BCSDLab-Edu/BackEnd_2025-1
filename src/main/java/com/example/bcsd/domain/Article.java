@@ -1,21 +1,37 @@
 package com.example.bcsd.domain;
 
-import jakarta.validation.constraints.NotNull;
-
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
+@Entity
+@Table(name = "article")
 public class Article {
-    Long id;
-    Long writerId;
-    Long boardId;
-    String title;
-    String content;
-    LocalDateTime createdDate;
-    LocalDateTime modifiedDate;
 
-    public Article(
-            Long id, Long writerId, Long boardId, String title, String content, LocalDateTime createdDate, LocalDateTime modifiedDate
-    ) {
+    @Id
+    private Long id;
+
+    @Column(name = "writer_id", nullable = false)
+    private Long writerId;
+
+    @Column(name = "board_id", nullable = false)
+    private Long boardId;
+
+    @Column(nullable = false)
+    private String title;
+
+    @Column(columnDefinition = "TEXT")
+    private String content;
+
+    @Column(name = "created_date", nullable = false)
+    private LocalDateTime createdDate;
+
+    @Column(name = "modified_date", nullable = false)
+    private LocalDateTime modifiedDate;
+
+    public Article() {}
+
+    public Article(Long id, Long writerId, Long boardId, String title, String content,
+                   LocalDateTime createdDate, LocalDateTime modifiedDate) {
         this.id = id;
         this.writerId = writerId;
         this.boardId = boardId;
@@ -25,59 +41,24 @@ public class Article {
         this.modifiedDate = modifiedDate;
     }
 
-    public Long getId() {
-        return id;
-    }
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public Long getWriterId() { return writerId; }
+    public void setWriterId(Long writerId) { this.writerId = writerId; }
 
-    public Long getWriterId() {
-        return writerId;
-    }
+    public Long getBoardId() { return boardId; }
+    public void setBoardId(Long boardId) { this.boardId = boardId; }
 
-    public void setWriterId(Long writerId) {
-        this.writerId = writerId;
-    }
+    public String getTitle() { return title; }
+    public void setTitle(String title) { this.title = title; }
 
-    public Long getBoardId() {
-        return boardId;
-    }
+    public String getContent() { return content; }
+    public void setContent(String content) { this.content = content; }
 
-    public void setBoardId(Long boardId) {
-        this.boardId = boardId;
-    }
+    public LocalDateTime getCreatedDate() { return createdDate; }
+    public void setCreatedDate(LocalDateTime createdDate) { this.createdDate = createdDate; }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public LocalDateTime getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(LocalDateTime createdDate) {
-        this.createdDate = createdDate;
-    }
-
-    public LocalDateTime getModifiedDate() {
-        return modifiedDate;
-    }
-
-    public void setModifiedDate(LocalDateTime modifiedDate) {
-        this.modifiedDate = modifiedDate;
-    }
+    public LocalDateTime getModifiedDate() { return modifiedDate; }
+    public void setModifiedDate(LocalDateTime modifiedDate) { this.modifiedDate = modifiedDate; }
 }
