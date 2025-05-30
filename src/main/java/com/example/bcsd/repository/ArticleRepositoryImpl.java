@@ -19,13 +19,13 @@ public class ArticleRepositoryImpl implements ArticleRepository {
     }
 
     public List<Article> findAll() {
-        return em.createQuery("select a from article a", Article.class)
+        return em.createQuery("select a from Article a", Article.class)
                 .getResultList();
     }
 
     @Override
     public List<Article> findByBoardId(Long boardId) {
-        return em.createQuery("SELECT a FROM article a WHERE a.boardId = :boardId", Article.class)
+        return em.createQuery("SELECT a FROM Article a WHERE a.boardId = :boardId", Article.class)
                 .setParameter("boardId", boardId)
                 .getResultList();
     }
@@ -37,7 +37,7 @@ public class ArticleRepositoryImpl implements ArticleRepository {
 
     @Override
     public boolean existsByWriterId(Long writerId) {
-        Long count = em.createQuery("SELECT COUNT(a) FROM article a WHERE a.writerId = :writerId", Long.class)
+        Long count = em.createQuery("SELECT COUNT(a) FROM Article a WHERE a.writerId = :writerId", Long.class)
                 .setParameter("writerId", writerId)
                 .getSingleResult();
         return count > 0;
@@ -45,7 +45,7 @@ public class ArticleRepositoryImpl implements ArticleRepository {
 
     @Override
     public boolean existsByBoardId(Long boardId) {
-        Long count = em.createQuery("SELECT COUNT(a) FROM article a WHERE a.boardId = :boardId", Long.class)
+        Long count = em.createQuery("SELECT COUNT(a) FROM Article a WHERE a.boardId = :boardId", Long.class)
                 .setParameter("boardId", boardId)
                 .getSingleResult();
         return count > 0;
