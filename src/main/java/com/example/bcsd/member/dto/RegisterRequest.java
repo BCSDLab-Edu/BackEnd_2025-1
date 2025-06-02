@@ -13,9 +13,9 @@ public record RegisterRequest(
     public Member toMember() {
         Member member = new Member();
 
-        member.setName(name);
-        member.setEmail(email);
-        member.setPassword(MemberUtil.Pass2Hash(password));
+        member.updateName(name);
+        member.updateEmail(email);
+        member.updatePassword(MemberUtil.Pass2Hash(password));
 
         return member;
     }

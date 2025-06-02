@@ -23,11 +23,12 @@ public record CreateArticleRequest(
 ) {
     public Article toArticle() {
         Article article = new Article();
-        article.setTitle(title);
-        article.setAuthorId(authorId);
-        article.setBoardId(boardId);
-        article.setContent(content);
-        article.setCreatedDate(LocalDateTime.now());
+
+        article.updateTitle(title);
+        article.updateContent(content);
+        article.updateAuthorId(authorId);
+        article.updateBoardId(boardId);
+        article.updateCreatedDate(LocalDateTime.now());
 
         return article;
     }

@@ -9,7 +9,7 @@ public record CreateBoardRequest(
 ) {
     public Board toBoard() {
         Board board = new Board();
-        board.setName(name);
+        board.updateName(name);
 
         return board;
     }
