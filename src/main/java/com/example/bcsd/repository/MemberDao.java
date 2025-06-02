@@ -1,42 +1,40 @@
 package com.example.bcsd.repository;
 
 import com.example.bcsd.domain.Member;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.JdbcTemplate;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
 public class MemberDao {
-    private final JdbcTemplate jdbc;
-
-    public MemberDao(JdbcTemplate jdbc) {
-        this.jdbc = jdbc;
-    }
+    @PersistenceContext
+    private EntityManager em;
 
     public void insert(Member member) {
-        String sql = "INSERT INTO member (name, email, password) VALUES (?, ?, ?)";
-        jdbc.update(sql, member.getName(), member.getEmail(), member.getPassword());
+        em.persist(member);
     }
 
     public List<Member> findAll() {
-        String sql = "SELECT * FROM member";
-        return jdbc.query(sql, new BeanPropertyRowMapper<>(Member.class));
+        return em.createQuery("SELECT m FROM Member m", Member.class).getResultList();
     }
 
     public Member findById(Long id) {
-        String sql = "SELECT * FROM member WHERE id = ?";
-        return jdbc.queryForObject(sql, new BeanPropertyRowMapper<>(Member.class), id);
+        return em.find(Member.class, id);
     }
 
     public void update(Long id, Member member) {
-        String sql = "UPDATE member SET name = ?, email = ?, password = ? WHERE id = ?";
-        jdbc.update(sql, member.getName(), member.getEmail(), member.getPassword(), id);
+        Member found = em.find(Member.class, id);
+        if (found != null) {
+            found.setName(member.getName());
+            found.setEmail(member.getEmail());
+            found.setPassword(member.getPassword());
+        }
     }
 
     public void delete(Long id) {
-        String sql = "DELETE FROM member WHERE id = ?";
-        jdbc.update(sql, id);
+        Member member = em.find(Member.class, id);
+        if (member != null) em.remove(member);
     }
 }

@@ -1,5 +1,3 @@
-
-// service/BoardService.java
 package com.example.bcsd.service;
 
 import com.example.bcsd.domain.Board;
