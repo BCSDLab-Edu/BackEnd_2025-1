@@ -119,7 +119,7 @@ public class ArticleService {
         article.updateTitle(title);
         article.updateBoardId(boardId);
         article.updateContent(content);
-        article.updateEditedDate(LocalDateTime.now());
+        article.updateModifiedDate(LocalDateTime.now());
 
         articleRepository.updateSave(article);
 

@@ -44,7 +44,7 @@ public class Article {
     private String content;
 
     private LocalDateTime createdDate;
-    private LocalDateTime editedDate;
+    private LocalDateTime modifiedDate;
 
     public void updateTitle(String title) {
         this.title = title;
@@ -54,11 +54,19 @@ public class Article {
         this.boardId = boardId;
     }
 
+    public void updateAuthorId(Long authorId) {
+        this.authorId = authorId;
+    }
+
     public void updateContent(String content) {
         this.content = content;
     }
 
-    public void updateEditedDate(LocalDateTime editedDate) {
-        this.editedDate = editedDate;
+    public void updateCreatedDate(LocalDateTime createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public void updateModifiedDate(LocalDateTime modifiedDate) {
+        this.modifiedDate = modifiedDate;
     }
 }
