@@ -116,10 +116,10 @@ public class ArticleService {
             content = article.getContent();
         }
 
-        article.setTitle(title);
-        article.setBoardId(boardId);
-        article.setContent(content);
-        article.setEditedDate(LocalDateTime.now());
+        article.updateTitle(title);
+        article.updateBoardId(boardId);
+        article.updateContent(content);
+        article.updateEditedDate(LocalDateTime.now());
 
         articleRepository.updateSave(article);
 
