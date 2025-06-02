@@ -5,6 +5,7 @@ import com.example.bcsd.board.model.Board;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
+import jakarta.transaction.Transactional;
 
 import java.util.List;
 
@@ -15,6 +16,7 @@ public class BoardRepository {
     @PersistenceContext
     private EntityManager em;
 
+    @Transactional
     public Board save(Board board) {
         em.persist(board);
 
@@ -38,10 +40,12 @@ public class BoardRepository {
         return typedQuery.getResultList();
     }
 
+    @Transactional
     public Board updateSave(Board board) {
         return em.merge(board);
     }
 
+    @Transactional
     public void delete(Long id) {
         Board board = em.find(Board.class, id);
 
