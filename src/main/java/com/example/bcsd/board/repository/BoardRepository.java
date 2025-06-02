@@ -34,7 +34,7 @@ public class BoardRepository {
     }
 
     public List<Board> findAll() {
-        String jpql = "SELECT b FROM board b";
+        String jpql = "SELECT b FROM Board b";
         TypedQuery<Board> typedQuery = em.createQuery(jpql, Board.class);
 
         return typedQuery.getResultList();

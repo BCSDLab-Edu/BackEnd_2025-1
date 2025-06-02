@@ -33,7 +33,7 @@ public class MemberRepository {
     }
 
     public Optional<Member> findByEmail(String email) {
-        String jpql = "SELECT m FROM member m WHERE m.email = :email";
+        String jpql = "SELECT m FROM Member m WHERE m.email = :email";
         try {
             Member member = em.createQuery(jpql, Member.class).setParameter("email", email).getSingleResult();
             
@@ -48,7 +48,7 @@ public class MemberRepository {
     }
 
     public List<Member> findAll() {
-        String jpql = "SELECT m FROM member";
+        String jpql = "SELECT m FROM Member";
 
         TypedQuery<Member> typedQuery = em.createQuery(jpql, Member.class);
 
