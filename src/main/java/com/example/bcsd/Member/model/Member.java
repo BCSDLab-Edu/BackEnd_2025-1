@@ -1,40 +1,53 @@
 package com.example.bcsd.member.model;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@Entity
+@Table(name = "member")
 public class Member {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotNull
+    @Column(nullable = false)
     private String name;
+
+    @NotNull
+    @Column(nullable = false)
     private String email;
+
+    @NotNull
+    @Column(nullable = false)
     private String password;
 
-    public Long getId() {
-        return this.id;
-    }
-
-    public void setId(Long id) {
+    public void updateId(Long id) {
         this.id = id;
     }
 
-    public String getName() {
-        return this.name;
-    }
-
-    public void setName(String name) {
+    public void updateName(String name) {
         this.name = name;
     }
 
-    public String getEmail() {
-        return this.email;
-    }
-
-    public void setEmail(String email) {
+    public void updateEmail(String email) {
         this.email = email;
     }
 
-    public String getPassword() {
-        return this.password;
-    }
-
-    public void setPassword(String password) {
+    public void updatePassword(String password) {
         this.password = password;
     }
 }

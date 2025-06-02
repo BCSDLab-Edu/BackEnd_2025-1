@@ -30,13 +30,13 @@ public class MemberService {
     public UpdateMemberResponse UpdateMember(Long id, UpdateMemberRequest request) {
         Member member = GetMember(id);
         if (request.name() != null) {
-            member.setName(request.name());
+            member.updateName(request.name());
         }
 
         if (request.email() != null) {
-            member.setEmail(request.email());
+            member.updateEmail(request.email());
         } else {
-            member.setEmail(null);
+            member.updateEmail(null);
         }
 
         memberRepository.updateSave(member);

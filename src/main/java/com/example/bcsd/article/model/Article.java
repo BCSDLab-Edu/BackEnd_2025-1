@@ -36,11 +36,11 @@ public class Article {
 
     @Size(max = 255)
     @NotNull
-    @Column(name = "title", nullable = false)
+    @Column(nullable = false)
     private String title;
 
     @NotNull
-    @Column(name = "content", nullable = false)
+    @Column(nullable = false)
     private String content;
 
     private LocalDateTime createdDate;
