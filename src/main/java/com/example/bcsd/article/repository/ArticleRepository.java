@@ -30,9 +30,9 @@ public class ArticleRepository {
     }
 
     public List<Article> findAll() {
-
-        String jpql = "SELECT * FROM article";
+        String jpql = "SELECT a FROM article a";
         TypedQuery<Article> typedQuery = em.createQuery(jpql, Article.class);
+
         return typedQuery.getResultList();
     }
 

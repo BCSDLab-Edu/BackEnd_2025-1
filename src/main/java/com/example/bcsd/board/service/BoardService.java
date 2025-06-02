@@ -50,7 +50,7 @@ public class BoardService {
     @Transactional
     public UpdateBoardResponse UpdateBoard(Long id, UpdateBoardRequest request) {
         Board board = GetBoard(id);
-        board.setName(request.name());
+        board.updateName(request.name());
 
         boardRepository.updateSave(board);
 
